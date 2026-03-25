@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Manrope', sans-serif;
+    @apply bg-white text-slate-800 antialiased overflow-x-hidden;
+  }
+}
+
+@layer utilities {
+  .font-heading {
+    font-family: 'Clash Display', sans-serif;
+  }
+
+  .grayscale-to-color {
+    filter: grayscale(100%);
+    transition: filter 300ms ease;
+  }
+
+  .group:hover .grayscale-to-color {
+    filter: grayscale(0%);
+    transition: filter 300ms ease;
+  }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, #e2e8f0 1px, transparent 1px),
+      linear-gradient(to bottom, #e2e8f0 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* Hide scrollbar for filter bars */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
