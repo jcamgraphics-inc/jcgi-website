@@ -31,7 +31,7 @@ export default function Home() {
     <main className="w-full flex flex-col">
 
       {/* Split Hero Section */}
-      <section className="relative w-full flex flex-col lg:flex-row min-h-[720px] bg-white border-b border-slate-200">
+      <section className="relative w-full flex flex-col lg:flex-row min-h-[720px] lg:max-h-[800px] bg-white border-b border-slate-200">
 
         {/* Left: Typographic Lockup */}
         <div className="w-full lg:w-1/2 flex flex-col justify-center p-8 lg:p-20 bg-grid relative overflow-hidden">
@@ -78,14 +78,15 @@ export default function Home() {
 
         {/* Right: High Resolution Image */}
         <motion.div
-          className="w-full lg:w-1/2 relative min-h-[400px] lg:min-h-full overflow-hidden group"
+          className="w-full lg:w-1/2 relative min-h-[400px] lg:min-h-[720px] overflow-hidden group"
           initial={{ opacity: 0, scale: 1.05 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
         >
-          <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000 group-hover:scale-110 grayscale contrast-125"
-            style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuCL94VWttY_faI3z4YbEsg2wpNroNOFESrtBQwZTF4CsxJEp_9nYXMRfIwh63jTAdw9UDAi67FbluE1sE8VkB3_8aqQpaEHfkKZpcV8PMNcmx3zJHPyYVShHNx45a37hiGNzvRATM4uh9KY7NOSuBh8zlPKACkigl0P9YCLpLSU21_q8_FkGVkYCJgr4x7L_uMc4L1qW_mc7zwFlr2L79cq4qFR7cVT600N4aGuTOJ_HILoAMVdNJiHeWWVkVxzs7moOOIscsdiHpF7')" }}
+          <img
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCL94VWttY_faI3z4YbEsg2wpNroNOFESrtBQwZTF4CsxJEp_9nYXMRfIwh63jTAdw9UDAi67FbluE1sE8VkB3_8aqQpaEHfkKZpcV8PMNcmx3zJHPyYVShHNx45a37hiGNzvRATM4uh9KY7NOSuBh8zlPKACkigl0P9YCLpLSU21_q8_FkGVkYCJgr4x7L_uMc4L1qW_mc7zwFlr2L79cq4qFR7cVT600N4aGuTOJ_HILoAMVdNJiHeWWVkVxzs7moOOIscsdiHpF7"
+            alt="Precision vinyl installation in progress"
+            className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-1000 group-hover:scale-110 grayscale contrast-125"
           />
           <div className="absolute inset-0 bg-navy-deep/10 mix-blend-multiply" />
           <motion.div

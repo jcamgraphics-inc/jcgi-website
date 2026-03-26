@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JCGI — Business Intelligence Report · Z Marketing Group</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<style>
+
+/* ── Tokens ──────────────────────────────────────────────────────────────── */
+:root {
+  --bg:           #0F0F0F;
+  --surface:      #1A1A1A;
+  --surface-2:    #222222;
+  --surface-3:    #2A2A2A;
+  --border:       rgba(255,255,255,0.07);
+  --border-mid:   rgba(255,255,255,0.12);
+  --blue:         #007AFF;
+  --blue-dim:     rgba(0,122,255,0.12);
+  --blue-border:  rgba(0,122,255,0.3);
+  --white:        #FFFFFF;
+  --white-70:     #FFFFFF;
+  --white-40:     rgba(255,255,255,0.40);
+  --white-15:     rgba(255,255,255,0.08);
+  --red:          #FF3B30;
+  --red-dim:      rgba(255,59,48,0.12);
+  --orange:       #FF9500;
+  --orange-dim:   rgba(255,149,0,0.12);
+  --green:        #34C759;
+  --green-dim:    rgba(52,199,89,0.12);
+  --gray:         rgba(255,255,255,0.38);
+  --radius-sm:    8px;
+  --radius:       12px;
+  --radius-lg:    16px;
+  --radius-xl:    20px;
+}
+
+/* ── Reset ───────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--white);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* ── Page shell ──────────────────────────────────────────────────────────── */
+.page {
+  width: 860px;
+  margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--border-mid);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.6), 0 1px 0 rgba(255,255,255,0.04) inset;
+  margin-bottom: 60px;
+}
+
+@media print {
+  body { background: #0F0F0F; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .page { width: 100%; margin: 0; border-radius: 0; border: none; box-shadow: none; }
+  .no-print { display: none !important; }
+  .pb { page-break-before: always; }
+}
+
+/* ── Print bar ───────────────────────────────────────────────────────────── */
+.print-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 44px;
+  background: rgba(15,15,15,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  z-index: 999;
+}
+.print-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.print-bar-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--blue);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+.print-bar-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  color: var(--white-70);
+  text-transform: uppercase;
+}
+.print-btn {
+  background: var(--blue);
+  color: var(--white);
+  border: none;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .08em;
+  padding: 7px 18px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: opacity .15s;
+}
+.print-btn:hover { opacity: .85; }
+body { padding-top: 56px; }
+
+/* ═══════════════════════════════════════════════════ COVER ════════ */
+.cover {
+  background: #0F0F0F;
+  min-height: 760px;
+  padding: 56px 56px 48px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+/* Background grid lines */
+.cover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+}
+
+/* Blue glow in top-right */
+.cover::after {
+  content: '';
+  position: absolute;
+  top: -160px; right: -160px;
+  width: 480px; height: 480px;
+  background: radial-gradient(circle, rgba(0,122,255,.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cover-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 64px;
+  position: relative;
+  z-index: 1;
+}
+.cover-eyebrow-brand {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+.cover-eyebrow-sep {
+  width: 1px;
+  height: 12px;
+  background: var(--border-mid);
+}
+.cover-eyebrow-type {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  color: var(--white-40);
+  text-transform: uppercase;
+}
+.cover-confidential {
+  margin-left: auto;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  color: var(--red);
+  border: 1px solid rgba(255,59,48,.3);
+  padding: 3px 10px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.cover-main {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+.cover-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .18em;
+  color: var(--blue);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.cover-title {
+  font-size: 56px;
+  font-weight: 900;
+  line-height: 1.0;
+  letter-spacing: -.03em;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+.cover-title-sub {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--white-40);
+  letter-spacing: -.01em;
+  margin-bottom: 32px;
+}
+.cover-meta-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 56px;
+}
+.cover-meta-tag {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--white-40);
+  background: var(--white-15);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 10px;
+  letter-spacing: .04em;
+}
+
+.cover-score-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 48px;
+}
+.cover-score-card {
+  background: var(--surface);
+  border: 1px solid var(--border-mid);
+  border-radius: var(--radius);
+  padding: 16px 14px;
+  position: relative;
+  overflow: hidden;
+}
+.cover-score-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+.card-blue::before   { background: var(--blue); }
+.card-red::before    { background: var(--red); }
+.card-orange::before { background: var(--orange); }
+.card-gray::before   { background: var(--gray); }
+
+.cover-score-card-num {
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  color: var(--white-40);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.cover-score-card-val {
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: -.03em;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.val-blue   { color: var(--blue); }
+.val-red    { color: var(--red); }
+.val-orange { color: var(--orange); }
+.val-gray   { color: var(--white-40); }
+
+.cover-score-card-label {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  margin-bottom: 2px;
+  color: var(--white-70);
+}
+.cover-score-card-status {
+  font-size: 8.5px;
+  font-weight: 500;
+  color: var(--white-40);
+}
+
+.cover-pillars {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.cover-pillar-item {
+  padding: 12px 0;
+  border-top: 1px solid var(--border);
+}
+.cover-pillar-num {
+  font-size: 8px;
+  font-weight: 700;
+  color: var(--blue);
+  letter-spacing: .14em;
+  margin-bottom: 4px;
+}
+.cover-pillar-name {
+  font-size: 9.5px;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+.cover-pillar-desc {
+  font-size: 9px;
+  color: var(--white-40);
+}
+
+.cover-footer {
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+.cover-footer-brand {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  color: var(--blue);
+  text-transform: uppercase;
+}
+.cover-footer-note {
+  font-size: 9px;
+  color: var(--white-40);
+  text-align: right;
+}
+
+
+/* ═══════════════════════════════════════════════ REPORT BODY ═════ */
+.body {
+  padding: 48px 48px 40px;
+}
+
+/* Section header */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  margin-top: 40px;
+}
+.section-header:first-child { margin-top: 0; }
+.section-header-line {
+  width: 3px;
+  height: 20px;
+  background: var(--blue);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.section-header-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  color: var(--blue);
+  text-transform: uppercase;
+}
+.section-header-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -.02em;
+}
+
+/* Running header */
+.running-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.rh-brand {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .18em;
+  color: var(--blue);
+  text-transform: uppercase;
+}
+.rh-title {
+  font-size: 9px;
+  color: var(--white-40);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* Card */
+.card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.card-sm {
+  padding: 16px;
+  border-radius: var(--radius);
+}
+
+/* Callout */
+.callout {
+  background: var(--blue-dim);
+  border: 1px solid var(--blue-border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  font-size: 12px;
+  color: var(--white-70);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+.callout strong { color: var(--white); }
+
+.callout-warn {
+  background: var(--orange-dim);
+  border-color: rgba(255,149,0,.3);
+}
+.callout-warn strong { color: var(--orange); }
+
+/* Status badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+}
+.badge-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.badge-critical { background: var(--red-dim);    border-color: rgba(255,59,48,.25);  color: var(--red);    }
+.badge-weak     { background: var(--orange-dim); border-color: rgba(255,149,0,.25);  color: var(--orange); }
+.badge-ok       { background: var(--green-dim);  border-color: rgba(52,199,89,.25);  color: var(--green);  }
+.badge-pending  { background: var(--white-15);   border-color: var(--border-mid);    color: var(--white-40); }
+.badge-blue     { background: var(--blue-dim);   border-color: var(--blue-border);   color: var(--blue);   }
+
+/* Score table */
+.score-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.score-tile {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 16px;
+  position: relative;
+  overflow: hidden;
+}
+.score-tile-top {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+.tile-blue::before   { content: ''; }
+.score-tile-eyebrow {
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  color: var(--white-40);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.score-tile-val {
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -.03em;
+  margin-bottom: 6px;
+}
+.score-tile-name {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--white-70);
+  margin-bottom: 10px;
+}
+.score-bar {
+  height: 3px;
+  background: var(--white-15);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.score-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width .4s ease;
+}
+
+/* Leak rows */
+.leak-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+.leak-num {
+  width: 28px; height: 28px;
+  background: var(--red-dim);
+  border: 1px solid rgba(255,59,48,.25);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--red);
+  flex-shrink: 0;
+}
+.leak-body { flex: 1; }
+.leak-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 3px;
+}
+.leak-desc {
+  font-size: 10.5px;
+  color: var(--white-40);
+  line-height: 1.5;
+}
+.leak-rev {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--green);
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+/* SWOT grid */
+.swot-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.swot-cell {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  overflow: hidden;
+  position: relative;
+}
+.swot-cell-top {
+  height: 2px;
+  position: absolute;
+  top: 0; left: 0; right: 0;
+}
+.swot-s-top { background: var(--green); }
+.swot-w-top { background: var(--red); }
+.swot-o-top { background: var(--blue); }
+.swot-t-top { background: var(--orange); }
+
+.swot-cell-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.swot-icon {
+  width: 32px; height: 32px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+.swot-icon-s { background: var(--green-dim); color: var(--green); border: 1px solid rgba(52,199,89,.25); }
+.swot-icon-w { background: var(--red-dim);   color: var(--red);   border: 1px solid rgba(255,59,48,.25); }
+.swot-icon-o { background: var(--blue-dim);  color: var(--blue);  border: 1px solid var(--blue-border); }
+.swot-icon-t { background: var(--orange-dim);color: var(--orange);border: 1px solid rgba(255,149,0,.25); }
+.swot-cell-title {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.title-s { color: var(--green); }
+.title-w { color: var(--red);   }
+.title-o { color: var(--blue);  }
+.title-t { color: var(--orange);}
+
+.swot-list {
+  list-style: none;
+  padding: 0; margin: 0;
+}
+.swot-list li {
+  font-size: 10.5px;
+  color: var(--white-70);
+  padding: 7px 0 7px 14px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  line-height: 1.45;
+}
+.swot-list li:last-child { border-bottom: none; padding-bottom: 0; }
+.swot-list li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 12px;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+}
+.swot-s li::before { background: var(--green); }
+.swot-w li::before { background: var(--red);   }
+.swot-o li::before { background: var(--blue);  }
+.swot-t li::before { background: var(--orange);}
+.swot-list li strong { color: var(--white); font-weight: 600; }
+
+/* Detail block */
+.detail-block {
+  margin-bottom: 18px;
+}
+.detail-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  color: var(--white-40);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.detail-list {
+  list-style: none;
+  padding: 0; margin: 0;
+}
+.detail-list li {
+  font-size: 11px;
+  color: var(--white-70);
+  padding: 7px 0 7px 16px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  line-height: 1.5;
+}
+.detail-list li:last-child { border-bottom: none; }
+.detail-list li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  color: var(--blue);
+  font-size: 8px;
+}
+.detail-list li strong { color: var(--white); font-weight: 600; }
+
+/* Competitor grid */
+.competitor-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.comp-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+}
+.comp-name {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 5px;
+}
+.comp-detail {
+  font-size: 10px;
+  color: var(--white-40);
+  line-height: 1.45;
+  margin-bottom: 8px;
+}
+.comp-threat {
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+.comp-threat-high { color: var(--red); }
+.comp-threat-med  { color: var(--orange); }
+
+/* Action table */
+.action-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+  margin-bottom: 24px;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.action-table thead th {
+  background: var(--surface-3);
+  color: var(--white-40);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.action-table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background .1s;
+}
+.action-table tbody tr:last-child { border-bottom: none; }
+.action-table tbody tr:hover td { background: var(--surface-3); }
+.action-table td {
+  padding: 12px;
+  color: var(--white-70);
+  vertical-align: top;
+  background: var(--surface-2);
+}
+.action-table .rank {
+  font-weight: 900;
+  font-size: 16px;
+  color: var(--white-40);
+  text-align: center;
+  width: 36px;
+}
+.action-table .revenue {
+  font-weight: 700;
+  color: var(--green);
+  white-space: nowrap;
+  font-size: 11px;
+}
+.action-table td strong { color: var(--white); font-weight: 600; }
+
+/* Pillar badge (inline) */
+.pbadge {
+  display: inline-block;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  padding: 2px 8px;
+  border-radius: 5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.pb-trust   { background: var(--red-dim);    color: var(--red);    border: 1px solid rgba(255,59,48,.2); }
+.pb-disc    { background: var(--blue-dim);   color: var(--blue);   border: 1px solid var(--blue-border); }
+.pb-perf    { background: var(--orange-dim); color: var(--orange); border: 1px solid rgba(255,149,0,.2); }
+.pb-rev     { background: var(--green-dim);  color: var(--green);  border: 1px solid rgba(52,199,89,.2); }
+
+/* Sources */
+.sources-list {
+  list-style: none; padding: 0; margin: 0;
+}
+.sources-list li {
+  font-size: 10px;
+  color: var(--white-40);
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sources-list li:last-child { border-bottom: none; }
+.sources-list li::before { content: '↗'; color: var(--blue); font-size: 10px; }
+.sources-list a { color: var(--blue); text-decoration: none; }
+.sources-list a:hover { text-decoration: underline; }
+
+/* Footer */
+.report-footer {
+  padding: 20px 48px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-brand {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  color: var(--blue);
+  text-transform: uppercase;
+}
+.footer-note {
+  font-size: 9px;
+  color: var(--white-40);
+}
+
+/* Stat row */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.stat-tile {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  text-align: center;
+}
+.stat-val {
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: -.03em;
+  color: var(--blue);
+  margin-bottom: 4px;
+}
+.stat-label {
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--white-40);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+
+/* Divider */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 32px 0;
+}
+
+/* Page break */
+.pb { page-break-before: always; }
+
+/* ── Readability overrides ───────────────────────────────────────────────── */
+.swot-list li   { font-size: 12.5px; color: #FFFFFF; }
+.detail-list li { font-size: 13px;   color: #FFFFFF; }
+.leak-desc      { font-size: 12.5px; color: #FFFFFF; }
+.callout        { font-size: 14px;   color: #FFFFFF; }
+.comp-detail    { font-size: 12px;   color: #FFFFFF; }
+.action-table   { font-size: 13px; }
+.action-table td{ color: #FFFFFF; }
+.sources-list li{ font-size: 12px;   color: #FFFFFF; }
+.cover-score-card-status { color: #FFFFFF; }
+
+</style>
+</head>
+<body>
+
+<!-- Print bar -->
+<div class="print-bar no-print">
+  <div class="print-bar-left">
+    <div class="print-bar-dot"></div>
+    <span class="print-bar-label">JCGI — Business Intelligence Report · Z Marketing Group</span>
+  </div>
+  <button class="print-btn" onclick="window.print()">Save as PDF</button>
+</div>
+
+<div class="page">
+
+  <!-- ═══════════════════════════════════════════════════════ COVER -->
+  <div class="cover">
+
+    <div class="cover-eyebrow">
+      <span class="cover-eyebrow-brand">Z Marketing Group</span>
+      <div class="cover-eyebrow-sep"></div>
+      <span class="cover-eyebrow-type">Business Intelligence Report</span>
+      <span class="cover-confidential">Confidential</span>
+    </div>
+
+    <div class="cover-main">
+      <div class="cover-label">Audited · March 25, 2026</div>
+      <div class="cover-title">JCAM Graphics<br/>Inc.</div>
+      <div class="cover-title-sub">JCGI · Louisville, KY · jcamgraphics.com</div>
+      <div class="cover-meta-row">
+        <span class="cover-meta-tag">Vinyl Graphics &amp; Fleet Wraps</span>
+        <span class="cover-meta-tag">30 Years in Operation</span>
+        <span class="cover-meta-tag">3M Certified</span>
+        <span class="cover-meta-tag">PDAA · UASG Member</span>
+        <span class="cover-meta-tag">Commercial + Residential</span>
+      </div>
+
+      <div class="cover-score-cards">
+        <div class="cover-score-card card-orange">
+          <div class="cover-score-card-top" style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--orange);"></div>
+          <div class="cover-score-card-num">Pillar 01</div>
+          <div class="cover-score-card-val val-orange">14<span style="font-size:14px;font-weight:400;opacity:.5;">/25</span></div>
+          <div class="cover-score-card-label">Discoverability</div>
+          <div class="cover-score-card-status">⚠ Weak</div>
+        </div>
+        <div class="cover-score-card card-red">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--red);"></div>
+          <div class="cover-score-card-num">Pillar 02</div>
+          <div class="cover-score-card-val val-red">5<span style="font-size:14px;font-weight:400;opacity:.5;">/25</span></div>
+          <div class="cover-score-card-label">Trust Signals</div>
+          <div class="cover-score-card-status" style="color:var(--red);">✕ Critical</div>
+        </div>
+        <div class="cover-score-card card-gray">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--white-15);"></div>
+          <div class="cover-score-card-num">Pillar 03</div>
+          <div class="cover-score-card-val val-gray">—<span style="font-size:14px;font-weight:400;">/25</span></div>
+          <div class="cover-score-card-label">Performance</div>
+          <div class="cover-score-card-status">Pending audit</div>
+        </div>
+        <div class="cover-score-card card-orange">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--orange);"></div>
+          <div class="cover-score-card-num">Pillar 04</div>
+          <div class="cover-score-card-val val-orange">10<span style="font-size:14px;font-weight:400;opacity:.5;">/25</span></div>
+          <div class="cover-score-card-label">Revenue Capture</div>
+          <div class="cover-score-card-status">⚠ Weak</div>
+        </div>
+      </div>
+
+      <div class="cover-pillars">
+        <div class="cover-pillar-item">
+          <div class="cover-pillar-num">01</div>
+          <div class="cover-pillar-name">Discoverability</div>
+          <div class="cover-pillar-desc">Can prospects find you?</div>
+        </div>
+        <div class="cover-pillar-item">
+          <div class="cover-pillar-num">02</div>
+          <div class="cover-pillar-name">Trust Signals</div>
+          <div class="cover-pillar-desc">Do they believe you?</div>
+        </div>
+        <div class="cover-pillar-item">
+          <div class="cover-pillar-num">03</div>
+          <div class="cover-pillar-name">Performance</div>
+          <div class="cover-pillar-desc">Does the funnel close?</div>
+        </div>
+        <div class="cover-pillar-item">
+          <div class="cover-pillar-num">04</div>
+          <div class="cover-pillar-name">Revenue Capture</div>
+          <div class="cover-pillar-desc">Is money being left behind?</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cover-footer">
+      <div class="cover-footer-brand">zmarketinggroup.com</div>
+      <div class="cover-footer-note">
+        Prepared exclusively for JCAM Graphics Inc.<br/>
+        Proprietary · Do not distribute without written consent.
+      </div>
+    </div>
+  </div>
+  <!-- end cover -->
+
+
+  <!-- ══════════════════════════════════════════════ REPORT BODY -->
+  <div class="body">
+
+    <div class="running-header">
+      <span class="rh-brand">Z Marketing Group</span>
+      <span class="rh-title">Business Intelligence Report — JCAM Graphics Inc.</span>
+    </div>
+
+    <!-- ── EXECUTIVE SUMMARY ──────────────────────────────────────── -->
+    <div class="section-header">
+      <div class="section-header-line"></div>
+      <div>
+        <div class="section-header-label">Section 01</div>
+        <div class="section-header-title">Executive Summary</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>3 active revenue leaks identified.</strong> JCGI carries one of the strongest credibility moats in the Louisville market — 30 years of operation, 3M certification, PDAA/UASG membership. The gap between that operational strength and its digital presence is where revenue is being captured by competitors daily.
+    </div>
+
+    <div class="score-grid">
+      <div class="score-tile">
+        <div class="score-tile-top" style="background:var(--orange);"></div>
+        <div class="score-tile-eyebrow">Pillar 01</div>
+        <div class="score-tile-val" style="color:var(--orange);">14<span style="font-size:14px;opacity:.5;">/25</span></div>
+        <div class="score-tile-name">Discoverability</div>
+        <div class="score-bar"><div class="score-bar-fill" style="width:56%;background:var(--orange);"></div></div>
+        <div style="margin-top:8px;"><span class="badge badge-weak"><span class="badge-dot" style="background:var(--orange);"></span>Weak</span></div>
+      </div>
+      <div class="score-tile">
+        <div class="score-tile-top" style="background:var(--red);"></div>
+        <div class="score-tile-eyebrow">Pillar 02</div>
+        <div class="score-tile-val" style="color:var(--red);">5<span style="font-size:14px;opacity:.5;">/25</span></div>
+        <div class="score-tile-name">Trust Signals</div>
+        <div class="score-bar"><div class="score-bar-fill" style="width:20%;background:var(--red);"></div></div>
+        <div style="margin-top:8px;"><span class="badge badge-critical"><span class="badge-dot" style="background:var(--red);"></span>Critical</span></div>
+      </div>
+      <div class="score-tile">
+        <div class="score-tile-top" style="background:var(--border-mid);"></div>
+        <div class="score-tile-eyebrow">Pillar 03</div>
+        <div class="score-tile-val" style="color:var(--white-40);">—<span style="font-size:14px;">/25</span></div>
+        <div class="score-tile-name">Performance</div>
+        <div class="score-bar"><div class="score-bar-fill" style="width:0%;background:var(--gray);"></div></div>
+        <div style="margin-top:8px;"><span class="badge badge-pending"><span class="badge-dot" style="background:var(--white-40);"></span>Pending</span></div>
+      </div>
+      <div class="score-tile">
+        <div class="score-tile-top" style="background:var(--orange);"></div>
+        <div class="score-tile-eyebrow">Pillar 04</div>
+        <div class="score-tile-val" style="color:var(--orange);">10<span style="font-size:14px;opacity:.5;">/25</span></div>
+        <div class="score-tile-name">Revenue Capture</div>
+        <div class="score-bar"><div class="score-bar-fill" style="width:40%;background:var(--orange);"></div></div>
+        <div style="margin-top:8px;"><span class="badge badge-weak"><span class="badge-dot" style="background:var(--orange);"></span>Weak</span></div>
+      </div>
+    </div>
+
+    <p style="font-size:9.5px;color:var(--white-40);margin-bottom:28px;line-height:1.6;">
+      * Performance pillar unscored — PageSpeed API quota exhausted during live audit session. Run <strong style="color:var(--white-70);">pagespeed.web.dev</strong> against jcamgraphics.com. Any mobile result below 50/100 qualifies as a second Critical flag and directly amplifies all other ranking issues.
+    </p>
+
+    <!-- ── REVENUE LEAKS ──────────────────────────────────────────── -->
+    <div class="section-header">
+      <div class="section-header-line" style="background:var(--red);"></div>
+      <div>
+        <div class="section-header-label" style="color:var(--red);">Active Leaks</div>
+        <div class="section-header-title">Revenue Leaks Identified</div>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-tile">
+        <div class="stat-val">3</div>
+        <div class="stat-label">Leaks Identified</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-val" style="color:var(--red);">$38K+</div>
+        <div class="stat-label">Min. Recoverable / Year</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-val" style="color:var(--green);">$169K</div>
+        <div class="stat-label">Max. Opportunity / Year</div>
+      </div>
+    </div>
+
+    <div class="leak-card">
+      <div class="leak-num">1</div>
+      <div class="leak-body">
+        <div class="leak-title">Zero Google Reviews — Invisible in Local Map Pack</div>
+        <div class="leak-desc">A 30-year business with no surfaced Google star rating is being filtered out of shortlists before a prospect ever visits the site. Competitors with 50–200 reviews dominate the Louisville map pack by default. Facebook shows "Not yet rated" with 4 total reviews.</div>
+      </div>
+      <div class="leak-rev">$10K–$48K/yr</div>
+    </div>
+    <div class="leak-card">
+      <div class="leak-num">2</div>
+      <div class="leak-body">
+        <div class="leak-title">NAP Inconsistency — Brand Confusion Suppresses Local SEO</div>
+        <div class="leak-desc">The company operates as "JCGI" but the domain is jcamgraphics.com, Facebook reads "JCGI Vinyl &amp; Graphic Installation," and Yelp uses a different address format. Google treats inconsistent NAP as a trust signal failure and buries the GBP listing in local pack rankings.</div>
+      </div>
+      <div class="leak-rev">Ranking recovery</div>
+    </div>
+    <div class="leak-card">
+      <div class="leak-num">3</div>
+      <div class="leak-body">
+        <div class="leak-title">Unqualified Contact Form — Every Lead Requires Manual Triage</div>
+        <div class="leak-desc">The quote form captures Name, Email, Subject, Message only. No vehicle type, fleet size, scope, or timeline. Every inbound lead requires a manual callback before scoping. Enterprise buyers who expect a professional intake bounce to competitors who ask the right questions upfront.</div>
+      </div>
+      <div class="leak-rev">Lead quality lift</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ── SWOT ───────────────────────────────────────────────────── -->
+    <div class="section-header">
+      <div class="section-header-line"></div>
+      <div>
+        <div class="section-header-label">Section 02</div>
+        <div class="section-header-title">SWOT Analysis</div>
+      </div>
+    </div>
+
+    <div class="swot-grid">
+      <!-- Strengths -->
+      <div class="swot-cell">
+        <div class="swot-cell-top swot-s-top"></div>
+        <div class="swot-cell-header">
+          <div class="swot-icon swot-icon-s">S</div>
+          <div class="swot-cell-title title-s">Strengths</div>
+        </div>
+        <ul class="swot-list swot-s">
+          <li><strong>30 years in business</strong> — deepest experience moat in Louisville; unreplicable by any new entrant</li>
+          <li><strong>3M Certified installer</strong> — supplier credential most local competitors cannot claim; directly justifies premium pricing</li>
+          <li><strong>PDAA &amp; UASG membership</strong> — industry body affiliations signal professional accountability</li>
+          <li><strong>Second Skin partnership</strong> — premium material supplier alignment adds product credibility</li>
+          <li><strong>Dual-market coverage</strong> — commercial fleet/signage AND residential/auto wrap</li>
+          <li><strong>Phone number prominent</strong> — (502) 314-5228 clickable throughout the site</li>
+          <li><strong>"Request a Free Estimate" CTA</strong> — low-friction offer removes price anxiety</li>
+          <li><strong>12+ gallery images</strong> — visual proof of work exists on the homepage</li>
+          <li><strong>Service breadth</strong> — sign printing, banner, vinyl wraps, auto wraps, logo, custom printing</li>
+        </ul>
+      </div>
+
+      <!-- Weaknesses -->
+      <div class="swot-cell">
+        <div class="swot-cell-top swot-w-top"></div>
+        <div class="swot-cell-header">
+          <div class="swot-icon swot-icon-w">W</div>
+          <div class="swot-cell-title title-w">Weaknesses</div>
+        </div>
+        <ul class="swot-list swot-w">
+          <li><strong>Zero on-site testimonials</strong> — no peer validation to close the trust gap</li>
+          <li><strong>Facebook: "Not yet rated," 4 reviews</strong> — invisible to social-proof-driven buyers in 2026</li>
+          <li><strong>No Google star rating surfaced</strong> — not competing in the local map pack review layer</li>
+          <li><strong>No named case studies</strong> — gallery shows work but no client, scale, or outcome</li>
+          <li><strong>Thin meta description</strong> — keyword stuffing with no value proposition; hurts organic CTR</li>
+          <li><strong>No content marketing</strong> — competitors publishing fleet wrap cost guides own high-intent traffic</li>
+          <li><strong>NAP inconsistency</strong> — JCGI vs. jcamgraphics.com vs. Facebook name mismatch suppresses local pack</li>
+          <li><strong>Unqualified contact form</strong> — Name/Email/Subject/Message only; no project type or fleet size</li>
+          <li><strong>No paid search presence</strong> — competitors capturing "vinyl wrap Louisville" clicks uncontested</li>
+          <li><strong>No retargeting or lead magnet</strong> — every non-converting visitor is lost permanently</li>
+        </ul>
+      </div>
+
+      <!-- Opportunities -->
+      <div class="swot-cell">
+        <div class="swot-cell-top swot-o-top"></div>
+        <div class="swot-cell-header">
+          <div class="swot-icon swot-icon-o">O</div>
+          <div class="swot-cell-title title-o">Opportunities</div>
+        </div>
+        <ul class="swot-list swot-o">
+          <li><strong>Review launch campaign</strong> — 25 Google reviews in 30 days = 108% more calls vs. &lt;10 reviews</li>
+          <li><strong>GBP photo optimization</strong> — 20+ photos drives 42% more direction requests, 35% more website clicks</li>
+          <li><strong>NAP consolidation</strong> — unifying brand name across all platforms recovers suppressed rankings</li>
+          <li><strong>4-post SEO content cluster</strong> — no competitor owns "fleet wrap Louisville KY" or "3M certified vinyl wrap Louisville" organically</li>
+          <li><strong>Service-area landing pages</strong> — Lexington, Cincinnati, Nashville corridor expands commercial fleet TAM</li>
+          <li><strong>Rebuilt quote form</strong> — vehicle type + fleet size + timeline pre-qualifies leads</li>
+          <li><strong>Google Ads activation</strong> — 3M certification is a differentiating ad hook competitors can't match</li>
+          <li><strong>Fleet electrification wave</strong> — EV rebrands = fresh wrap demand from logistics, utility, delivery sectors</li>
+          <li><strong>Architectural vinyl growth</strong> — retail barricades and wayfinding are high-margin adjacencies</li>
+        </ul>
+      </div>
+
+      <!-- Threats -->
+      <div class="swot-cell">
+        <div class="swot-cell-top swot-t-top"></div>
+        <div class="swot-cell-header">
+          <div class="swot-icon swot-icon-t">T</div>
+          <div class="swot-cell-title title-t">Threats</div>
+        </div>
+        <ul class="swot-list swot-t">
+          <li><strong>Wraps4Real</strong> — premium-positioned, Instagram-active, uses HEXIS/Avery/3M/KPMF; strong brand in same market</li>
+          <li><strong>Digital EFX Wraps</strong> — founded 2004, 20+ years; competes directly on experience and tenure</li>
+          <li><strong>Signs Now Louisville</strong> — franchise brand with national trust signals and marketing infrastructure JCGI lacks</li>
+          <li><strong>Sternberg Fleet Graphics</strong> — fleet-focused competitor; Google Ads presence takes RFQs first</li>
+          <li><strong>Vinyl Dave's</strong> — transparent pricing is a direct threat to price-sensitive residential segment</li>
+          <li><strong>Core Web Vitals suppression</strong> — unscored mobile performance may be amplifying every ranking penalty</li>
+          <li><strong>Review velocity gap compounding</strong> — every week competitors accumulate reviews; the gap widens</li>
+          <li><strong>Rising trust thresholds</strong> — enterprise procurement teams filter by review count before site visits</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ── PILLAR DEEP DIVES ───────────────────────────────────────── -->
+    <div class="section-header">
+      <div class="section-header-line"></div>
+      <div>
+        <div class="section-header-label">Section 03</div>
+        <div class="section-header-title">Pillar Deep Dives</div>
+      </div>
+    </div>
+
+    <!-- Pillar 1 -->
+    <div class="card" style="margin-bottom:12px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+        <div>
+          <div style="font-size:8px;font-weight:700;letter-spacing:.14em;color:var(--white-40);text-transform:uppercase;margin-bottom:4px;">Pillar 01</div>
+          <div style="font-size:14px;font-weight:800;color:var(--white);letter-spacing:-.01em;">Discoverability <span style="color:var(--orange);margin-left:8px;">14/25</span></div>
+        </div>
+        <span class="badge badge-weak"><span class="badge-dot" style="background:var(--orange);"></span>Weak — NAP Inconsistency</span>
+      </div>
+      <div class="detail-block">
+        <div class="detail-label">Findings</div>
+        <ul class="detail-list">
+          <li>Website live at jcamgraphics.com — meta title targets "Custom Car Vinyl Wraps &amp; Sign Printing Louisville, KY" — adequate keyword intent but <strong>no competitive differentiation</strong></li>
+          <li><strong>Meta description is thin and repetitive</strong> — keyword stuffing with no value proposition = below-average organic CTR</li>
+          <li><strong>NAP mismatch across platforms</strong> — "JCGI" on site/Facebook vs. "JCAM Graphics" on domain/Yelp — Google treats this as a trust failure and suppresses local pack placement</li>
+          <li>No blog, no content marketing — <strong>zero owned search real estate</strong> for high-intent queries like "fleet wrap cost Louisville"</li>
+          <li>No service-area pages for Lexington, Cincinnati, or Nashville corridor = missed commercial fleet geography</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Pillar 2 -->
+    <div class="card" style="margin-bottom:12px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+        <div>
+          <div style="font-size:8px;font-weight:700;letter-spacing:.14em;color:var(--white-40);text-transform:uppercase;margin-bottom:4px;">Pillar 02</div>
+          <div style="font-size:14px;font-weight:800;color:var(--white);letter-spacing:-.01em;">Trust Signals <span style="color:var(--red);margin-left:8px;">5/25</span></div>
+        </div>
+        <span class="badge badge-critical"><span class="badge-dot" style="background:var(--red);"></span>Critical — Zero Social Proof</span>
+      </div>
+      <div class="detail-block">
+        <div class="detail-label">Findings</div>
+        <ul class="detail-list">
+          <li><strong>No on-site testimonials or reviews</strong> — zero peer validation; cold prospects have no reason to choose JCGI over a competitor with 100+ Google reviews</li>
+          <li><strong>Facebook: "Not yet rated" — 4 total reviews</strong> — a 30-year-old business in 2026 with 4 Facebook reviews is self-eliminating from social-proof-driven shortlists</li>
+          <li><strong>No Google star rating surfaced</strong> — either the GBP is unclaimed or has &lt;5 reviews; both outcomes suppress local visibility entirely</li>
+          <li><strong>No named case studies</strong> — gallery shows work but names no client, vehicle count, or outcome; enterprise fleet buyers purchase on proof at scale</li>
+          <li><strong>Certifications buried</strong> — 3M, PDAA, UASG, Second Skin are listed but not visually prominent; these differentiate JCGI from every unlicensed competitor</li>
+          <li>Industry data: businesses with 25+ reviews receive <strong>108% more calls</strong>; GBP with 20+ photos get <strong>42% more direction requests</strong></li>
+        </ul>
+      </div>
+      <div style="font-size:10.5px;color:var(--white-40);padding-top:10px;border-top:1px solid var(--border);">
+        Potential revenue impact of fixing Trust Signals: <strong style="color:var(--green);">$10,000–$48,000/year</strong>
+      </div>
+    </div>
+
+    <!-- Pillar 3 -->
+    <div class="card" style="margin-bottom:12px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+        <div>
+          <div style="font-size:8px;font-weight:700;letter-spacing:.14em;color:var(--white-40);text-transform:uppercase;margin-bottom:4px;">Pillar 03</div>
+          <div style="font-size:14px;font-weight:800;color:var(--white);letter-spacing:-.01em;">Performance <span style="color:var(--white-40);margin-left:8px;">Unscored</span></div>
+        </div>
+        <span class="badge badge-pending"><span class="badge-dot" style="background:var(--white-40);"></span>Pending Manual Audit</span>
+      </div>
+      <div class="callout callout-warn">
+        <strong>Action required:</strong> Visit <strong>pagespeed.web.dev</strong> and run mobile + desktop analyses against jcamgraphics.com. Any mobile score below 50/100 = Critical flag and a direct Google local pack ranking suppressor.
+      </div>
+      <div class="detail-block">
+        <div class="detail-label">Industry Benchmarks</div>
+        <ul class="detail-list">
+          <li>A 1-second load delay reduces conversions by <strong>20%</strong></li>
+          <li>53% of mobile users abandon a page taking over <strong>3 seconds</strong> to load</li>
+          <li>Google's Core Web Vitals penalize slow sites in local rankings — amplifying every other leak identified in this report</li>
+          <li>Target: Mobile <strong>90+/100</strong>, LCP &lt; 2.5s, FCP &lt; 1.8s</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Pillar 4 -->
+    <div class="card" style="margin-bottom:24px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+        <div>
+          <div style="font-size:8px;font-weight:700;letter-spacing:.14em;color:var(--white-40);text-transform:uppercase;margin-bottom:4px;">Pillar 04</div>
+          <div style="font-size:14px;font-weight:800;color:var(--white);letter-spacing:-.01em;">Revenue Capture <span style="color:var(--orange);margin-left:8px;">10/25</span></div>
+        </div>
+        <span class="badge badge-weak"><span class="badge-dot" style="background:var(--orange);"></span>Weak — Conversion Underperforming</span>
+      </div>
+      <div class="detail-block">
+        <div class="detail-label">Findings</div>
+        <ul class="detail-list">
+          <li><strong>Contact form is unqualified</strong> — Name, Email, Subject, Message only; no vehicle type, fleet size, or timeline; every lead needs a manual scoping call</li>
+          <li><strong>No pricing transparency</strong> — "free estimate" is the only offer; cold prospects comparison-shop competitors who show "starting from" price signals</li>
+          <li><strong>No paid search presence detected</strong> — "vinyl wrap Louisville," "fleet graphics Louisville KY" are high-intent transactional queries with no JCGI ad presence</li>
+          <li><strong>No lead magnet or retargeting</strong> — no email capture, no download offer, no pixel; every non-converting visitor is gone permanently</li>
+          <li><strong>Hours not prominently displayed</strong> — M-F 8AM–6PM exists but is not in the header; missed after-hours calls lose leads</li>
+        </ul>
+      </div>
+      <div style="font-size:10.5px;color:var(--white-40);padding-top:10px;border-top:1px solid var(--border);">
+        Potential revenue impact of Google Ads activation alone: <strong style="color:var(--green);">$14,000–$55,000/year</strong>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ── COMPETITIVE LANDSCAPE ──────────────────────────────────── -->
+    <div class="section-header">
+      <div class="section-header-line" style="background:var(--orange);"></div>
+      <div>
+        <div class="section-header-label" style="color:var(--orange);">Section 04</div>
+        <div class="section-header-title">Competitive Landscape — Louisville, KY</div>
+      </div>
+    </div>
+
+    <div class="competitor-grid">
+      <div class="comp-card">
+        <div class="comp-name">Wraps4Real</div>
+        <div class="comp-detail">Premium positioning. Uses HEXIS, Avery Dennison, 3M, KPMF. Active on Instagram @wraps4real. 3935 Bardstown Rd, Louisville.</div>
+        <div class="comp-threat comp-threat-high">▲ High — Brand &amp; Premium Materials</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-name">Digital EFX Wraps</div>
+        <div class="comp-detail">Founded 2004. 20+ years in market. Industry veterans with graphic art and sign-making background. Deep local roots.</div>
+        <div class="comp-threat comp-threat-high">▲ High — Tenure &amp; Experience</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-name">Signs Now Louisville</div>
+        <div class="comp-detail">Franchise brand. National trust signals. Professional reviews. Commercial fleet offering. Full marketing infrastructure.</div>
+        <div class="comp-threat comp-threat-high">▲ High — Franchise + Reviews</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-name">Sternberg Fleet Graphics</div>
+        <div class="comp-detail">Direct fleet-focused competitor. Potential Google Ads presence may capture fleet RFQs before JCGI is even considered.</div>
+        <div class="comp-threat comp-threat-med">● Medium — Fleet Direct</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-name">Vinyl Dave's</div>
+        <div class="comp-detail">Founded 2020. Transparent, accessible pricing. Explicitly targets price-sensitive residential and small-business buyers.</div>
+        <div class="comp-threat comp-threat-med">● Medium — Pricing Transparency</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-name">CKL Wraps</div>
+        <div class="comp-detail">Highly reviewed on Yelp. "Amazing and caring staff" — cited across multiple reviews. Active local word-of-mouth velocity.</div>
+        <div class="comp-threat comp-threat-med">● Medium — Review Velocity</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ── ACTION PLAN ────────────────────────────────────────────── -->
+    <div class="section-header">
+      <div class="section-header-line" style="background:var(--green);"></div>
+      <div>
+        <div class="section-header-label" style="color:var(--green);">Section 05</div>
+        <div class="section-header-title">Prioritized Action Plan</div>
+      </div>
+    </div>
+
+    <table class="action-table">
+      <thead>
+        <tr>
+          <th style="width:36px;">#</th>
+          <th style="width:100px;">Pillar</th>
+          <th>Action</th>
+          <th style="width:130px;">Est. Revenue Impact</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="rank">1</td>
+          <td><span class="pbadge pb-trust">Trust</span></td>
+          <td><strong>Google review generation campaign</strong> — target 25 reviews in 30 days via post-job SMS/email sequence</td>
+          <td class="revenue">$10K–$48K/yr</td>
+        </tr>
+        <tr>
+          <td class="rank">2</td>
+          <td><span class="pbadge pb-trust">Trust + Disc.</span></td>
+          <td><strong>GBP full optimization</strong> — claim/verify listing, upload 20+ project photos, unify NAP, add services + hours</td>
+          <td class="revenue">$6K–$28K/yr</td>
+        </tr>
+        <tr>
+          <td class="rank">3</td>
+          <td><span class="pbadge pb-disc">Discovery</span></td>
+          <td><strong>Consolidate brand identity</strong> — unify "JCGI" or "JCAM Graphics" across jcamgraphics.com, GBP, Yelp, and Facebook</td>
+          <td class="revenue">Ranking recovery</td>
+        </tr>
+        <tr>
+          <td class="rank">4</td>
+          <td><span class="pbadge pb-rev">Revenue</span></td>
+          <td><strong>Rebuild quote form</strong> — add Vehicle Type, Fleet Size, Project Timeline, and Budget Range as required fields</td>
+          <td class="revenue">Lead quality lift</td>
+        </tr>
+        <tr>
+          <td class="rank">5</td>
+          <td><span class="pbadge pb-perf">Performance</span></td>
+          <td><strong>Run full PageSpeed audit</strong> — fix mobile score to 90+, LCP &lt; 2.5s; currently unscored and potentially Critical</td>
+          <td class="revenue">$8K–$38K/yr</td>
+        </tr>
+        <tr>
+          <td class="rank">6</td>
+          <td><span class="pbadge pb-rev">Revenue</span></td>
+          <td><strong>Launch Google Ads</strong> targeting "vinyl wrap Louisville," "fleet graphics Louisville KY," "3M certified vinyl wrap near me"</td>
+          <td class="revenue">$14K–$55K/yr</td>
+        </tr>
+        <tr>
+          <td class="rank">7</td>
+          <td><span class="pbadge pb-disc">Discovery</span></td>
+          <td><strong>Publish 4-post SEO content cluster</strong> targeting fleet wrap keywords — currently unowned by any Louisville competitor</td>
+          <td class="revenue">Organic traffic</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="divider"></div>
+
+    <!-- ── DATA SOURCES ────────────────────────────────────────────── -->
+    <div class="section-header">
+      <div class="section-header-line" style="background:var(--white-40);"></div>
+      <div>
+        <div class="section-header-label" style="color:var(--white-40);">Appendix</div>
+        <div class="section-header-title">Data Sources</div>
+      </div>
+    </div>
+
+    <ul class="sources-list">
+      <li>Live site audit — <a href="https://jcamgraphics.com/" target="_blank">jcamgraphics.com</a></li>
+      <li>Competitor landscape — <a href="https://www.yelp.com/search?cflt=vehiclewraps&find_loc=louisville,+ky" target="_blank">Yelp: Best Vehicle Wraps Louisville KY (2026)</a></li>
+      <li>Competitor profile — <a href="https://wraps4real.com/" target="_blank">Wraps4Real · wraps4real.com</a></li>
+      <li>Social proof audit — <a href="https://www.facebook.com/jcgivinylgraphicinstallation/" target="_blank">JCGI Facebook Page</a></li>
+      <li>Yelp listing — <a href="https://www.yelp.com/biz/jcgi-louisville" target="_blank">JCGI — Louisville (Yelp)</a></li>
+      <li>Revenue benchmarks — Z Marketing Group 4-Pillar Business Intelligence Framework</li>
+      <li>Industry data — Google Business Profile internal data; mobile performance conversion research</li>
+    </ul>
+
+  </div>
+  <!-- end body -->
+
+  <div class="report-footer">
+    <div class="footer-brand">Z Marketing Group · zmarketinggroup.com</div>
+    <div class="footer-note">Z Marketing Group guarantees strategy. Execution determines outcome. &nbsp;·&nbsp; March 25, 2026</div>
+  </div>
+
+</div>
+<!-- end .page -->
+</body>
+</html>
