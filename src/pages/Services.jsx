@@ -12,261 +12,334 @@ const stagger = {
   show: { transition: { staggerChildren: 0.12 } },
 };
 
+const AutoIcon = () => (
+  <svg width="18" height="16" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4.5 10h15M3 14h18M6 18H4a1 1 0 01-1-1v-3M18 18h2a1 1 0 001-1v-3M5 10l2-6h10l2 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <circle cx="6.5" cy="16.5" r="1.5" fill="currentColor"/>
+    <circle cx="17.5" cy="16.5" r="1.5" fill="currentColor"/>
+  </svg>
+);
+
+const ArchIcon = () => (
+  <svg width="11" height="18" viewBox="0 0 14 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M7 1C4.24 1 2 3.24 2 6c0 3.75 5 11 5 11s5-7.25 5-11c0-2.76-2.24-5-5-5z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <circle cx="7" cy="6" r="1.5" stroke="currentColor" strokeWidth="1.5"/>
+  </svg>
+);
+
+const PeopleIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <circle cx="9" cy="7" r="4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+const EngineerIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M6 21v-1a6 6 0 0112 0v1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <circle cx="19" cy="16" r="1" stroke="currentColor" strokeWidth="1.5"/>
+    <path d="M19 13v1m0 4v1m2.6-4.5l-.87.5m-3.46 2l-.87.5m0-3l-.87-.5m3.46-2l-.87-.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+  </svg>
+);
+
+const BadgeIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="10" r="6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+const divisions = [
+  {
+    label: 'DIVISION 01',
+    icon: <AutoIcon />,
+    heading: 'Automotive',
+    body: 'Comprehensive vehicle transformation services ranging from large-scale corporate fleet branding and logistics graphics to bespoke luxury wraps and advanced paint protection films.',
+    src: '/car-show-vw.png',
+    groups: [
+      { title: 'COMMERCIAL', items: ['Fleet Management', 'High-Impact Graphics'] },
+      { title: 'SPECIALTY', items: ['Premium Graphics', 'Personal Vehicle design'] },
+    ],
+  },
+  {
+    label: 'DIVISION 02',
+    icon: <ArchIcon />,
+    heading: 'Architectural',
+    body: 'Innovative surface solutions for physical environments. Elevating corporate venues through interior graphics and modernizing residential spaces with sustainable architectural films.',
+    src: '/wildcat-engineering-mural.png',
+    groups: [
+      { title: 'CORPORATE', items: ['Glass Frosting', 'Wall Murals', 'Store Front Graphics', 'Small Signage'] },
+      { title: 'RESIDENTIAL', items: ['Cabinet Resurfacing', 'Sustainable Finishes'] },
+    ],
+  },
+];
+
+const pillars = [
+  {
+    icon: <PeopleIcon />,
+    title: 'Elite Workforce',
+    body: 'Knowledgeable full-time expert technicians, each installer trained in graphic installations to meet JCGI standards.',
+  },
+  {
+    icon: <EngineerIcon />,
+    title: 'Precision Deployment',
+    body: 'Our proprietary precision-engineered installation system ensures consistent quality across large fleet distributions.',
+  },
+  {
+    icon: <BadgeIcon />,
+    title: 'Certified Mastery',
+    body: "Proud members of UASG, PDAA, SGIA, 3M certified, Lowen certified, backing our work with the industry's strongest material warranties.",
+  },
+];
+
 export default function Services() {
   return (
-    <main className="bg-white">
+    <main className="w-full flex flex-col bg-white">
 
-      {/* Hero Section */}
-      <section className="relative h-[614px] flex items-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img
-            className="w-full h-full object-cover"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1MgCjHqBOwtdwGymKdihAT5UUrT2BMsznA_Ric0Z8YqBKTfj1Y2RqugR7plZ84hvYE-gcujGoko8Cu_kXUX_U5d8CA3NVShcAvpbJWxvTvPhLN8cX4fHkP0T_cFk4ynb0JuOS7qIF7m28LKhctbxn-60lRoK6xyU4bieL5F3eKS8FrkAjPApFTecC9RYF2nfIgtPJjIhg91S3H1UE1Hf0LPp2ZkcAa4rRH3uUgG0niiaTS2Xu2XmKmuQtiTinjzJGIKVKp3QyUbyi"
-            alt="Commercial vehicle fleet"
-          />
-          <div className="absolute inset-0 bg-slate-900/70 mix-blend-multiply" />
-        </div>
-        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 w-full">
+      {/* ── Hero ── */}
+      <section className="relative w-full flex items-center min-h-[560px] overflow-hidden">
+        <img
+          src="/father-son.png"
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-[#181616]/[0.63]" />
+        <div className="relative z-10 w-full max-w-[1440px] mx-auto px-10 py-28">
           <motion.div
-            className="max-w-2xl border-l-4 border-primary pl-8"
-            initial={{ opacity: 0, x: -32 }}
+            className="flex flex-col max-w-[680px] gap-6"
+            initial={{ opacity: 0, x: -28 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
-            <h1 className="font-heading text-4xl md:text-6xl text-white mb-4 tracking-tight uppercase">
-              Precision Installation Services
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-[2px] bg-primary flex-shrink-0" />
+              <span className="text-white/80 text-xs font-medium tracking-[0.2em] uppercase">
+                our work is your image // louisville
+              </span>
+            </div>
+            <h1
+              className="text-white font-bold leading-[0.9] tracking-[-0.02em] uppercase"
+              style={{ fontSize: 'clamp(44px, 5.5vw, 72px)' }}
+            >
+              Precision<br />Installation<br />Services
             </h1>
-            <p className="text-lg md:text-xl text-slate-200 font-light leading-relaxed">
-              Industry-leading surface transformations for corporate fleets and high-end architectural environments.
+            <p className="text-[#E2E8F0] text-base leading-relaxed max-w-[560px]">
+              Industry-leading surface transformations for corporate fleets and high-end
+              architectural environments.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Introduction Section */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, y: 32 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-            >
-              <h2 className="text-3xl font-bold mb-6 text-slate-900">A Decade of Technical Excellence</h2>
-              <p className="text-lg leading-relaxed text-slate-600 mb-8">
-                Since 2014, JCGI has been at the forefront of the vinyl installation industry. We combine technical precision with project management expertise to deliver seamless results across the nation.
-              </p>
-              <div className="grid grid-cols-2 gap-8">
-                <div className="border-t border-slate-100 pt-4">
-                  <span className="block text-4xl font-bold text-primary">10+</span>
-                  <span className="text-sm font-bold uppercase tracking-widest text-slate-900">Years Experience</span>
-                </div>
-                <div className="border-t border-slate-100 pt-4">
-                  <span className="block text-4xl font-bold text-primary">400+</span>
-                  <span className="text-sm font-bold uppercase tracking-widest text-slate-900">Projects Completed</span>
-                </div>
-              </div>
-            </motion.div>
+      {/* ── Introduction ── */}
+      <section className="w-full bg-white py-[120px]">
+        <div className="max-w-[1440px] mx-auto px-10 flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
 
-            <motion.div
-              className="relative group"
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+          {/* Left: text */}
+          <motion.div
+            className="flex flex-col gap-8 flex-1 max-w-[560px]"
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-[2px] bg-primary flex-shrink-0" />
+              <span className="text-slate-500 text-xs font-bold tracking-[0.25em] uppercase">
+                Enterprise Standard
+              </span>
+            </div>
+            <h2
+              className="text-navy-deep font-bold leading-tight tracking-tight uppercase"
+              style={{ fontSize: 'clamp(28px, 3vw, 42px)' }}
             >
-              <img
-                className="shadow-2xl"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDETcQ2dmhdpxM56RQJxHqs4Ut2Ehn8H_nM2L_q3Pw7Qa9j6Ly9E5xOQ0Vv32ywj8Ir42yl0oydQdOXWeYssxm_hbMIdgKIMP0_11y7m5AW6OESZ68V8HUgIHmYybBOhBiGcjslyx9qHf-rbzV4eF__2g-yq7YLMCbNgvs-iEF9GRIz5iBCAQUfQMKRbZQrl5nsy4j0mq-6Nw-pTmj_geSRWz8Uhh6j2L1XFzlOjzoU51aEu17rdoOS5VlGUoh1I63H67PAzxX_EW8a"
-                alt="Professional technician"
-              />
-              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-primary flex items-center justify-center">
-                <span className="material-symbols-outlined text-white text-5xl">verified</span>
+              3 Decades of Technical Excellence
+            </h2>
+            <p className="text-slate-600 text-base leading-relaxed">
+              Since 1993, JCGI has been at the forefront of the vinyl installation industry. We
+              combine technical precision with project management expertise to deliver seamless
+              results across the nation.
+            </p>
+            <div className="flex gap-12 pt-2">
+              <div className="flex flex-col items-center gap-1 border-b-2 border-primary pb-4">
+                <span className="text-4xl font-bold text-primary tracking-tight">30+</span>
+                <span className="text-xs font-bold uppercase tracking-[0.18em] text-navy-deep">Years Experience</span>
               </div>
-            </motion.div>
-          </div>
+              <div className="flex flex-col items-center gap-1 border-b-2 border-primary pb-4">
+                <span className="text-4xl font-bold text-primary tracking-tight">1000+</span>
+                <span className="text-xs font-bold uppercase tracking-[0.18em] text-navy-deep">Projects Completed</span>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Right: image */}
+          <motion.div
+            className="relative flex-1 max-w-[512px] w-full"
+            initial={{ opacity: 0, scale: 1.04 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="overflow-hidden border border-slate-200 shadow-lg aspect-square">
+              <img
+                src="/wrap-install-action.png"
+                alt="JCGI wrap installation in progress"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </motion.div>
+
         </div>
       </section>
 
-      {/* Core Divisions Grid */}
-      <section className="py-24 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
+      {/* ── Core Divisions ── */}
+      <section className="w-full bg-[#F8FAFC] py-24">
+        <div className="max-w-[1440px] mx-auto px-10 flex flex-col gap-16">
+
+          {/* Header */}
           <motion.div
-            className="mb-16"
+            className="flex flex-col gap-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl font-bold text-slate-900">Core Divisions</h2>
-            <div className="h-1 w-20 bg-primary mt-4" />
+            <h2 className="text-navy-deep text-3xl lg:text-4xl font-bold tracking-tight">
+              Core Divisions
+            </h2>
+            <div className="w-20 h-1 bg-primary" />
           </motion.div>
 
+          {/* Division Cards */}
           <motion.div
-            className="grid grid-cols-1 md:grid-cols-12 gap-6"
+            className="grid grid-cols-1 lg:grid-cols-2 gap-6"
             variants={stagger}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, margin: '-60px' }}
+            viewport={{ once: true, margin: '-40px' }}
           >
-            {/* Commercial Fleet */}
-            <motion.div variants={fadeUp} className="md:col-span-8 group relative overflow-hidden bg-white shadow-sm hover:shadow-xl transition-shadow border border-slate-100">
-              <div className="h-80 overflow-hidden">
-                <img
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2et2KUGJVE_JFnW1JNx8NZsmqZoueHSqpgKdx7IEVJnXxBRcaIaMctgqNHW5T6J44TlT5igLTZxCX0Xh8paM7vEu5gWqTBhczFMjj_eN8tZvxhYTpJcOsowxtLe1y3j5Vrsb0uacQsCW7zBLtvxipTS13E8EUEIbSUGLAx0vJVKP69qBOWkTBfkK98Q9s8pZ783AyPX2KRBsNFlyf0kApt_4Oq32lMsMOj3obh_hkeOdBf3uHGjoqQ0jEp9u5sj0JKerTDJlwaNmi"
-                  alt="Commercial Fleet"
-                />
-              </div>
-              <div className="p-8">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="material-symbols-outlined text-primary">local_shipping</span>
-                  <span className="text-xs font-bold tracking-widest uppercase text-slate-400">Division 01</span>
+            {divisions.map(({ label, icon, heading, body, src, groups }) => (
+              <motion.div
+                key={label}
+                variants={fadeUp}
+                className="group flex flex-col bg-white border border-slate-200 shadow-sm overflow-hidden"
+              >
+                {/* Image */}
+                <div className="h-[320px] overflow-hidden">
+                  <img
+                    src={src}
+                    alt={heading}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-2">Commercial Fleet</h3>
-                <p className="text-slate-600 mb-6">Large-scale branding solutions and comprehensive fleet graphics management for logistics and service industries.</p>
-                <ul className="space-y-2 text-sm font-medium text-slate-900">
-                  <li className="flex items-center gap-2"><span className="material-symbols-outlined text-sm">check_circle</span> Full Fleet Decals</li>
-                  <li className="flex items-center gap-2"><span className="material-symbols-outlined text-sm">check_circle</span> Multi-location Deployment</li>
-                </ul>
-              </div>
-            </motion.div>
 
-            {/* Commercial Venue */}
-            <motion.div variants={fadeUp} className="md:col-span-4 bg-slate-900 text-white p-8 flex flex-col justify-between">
-              <div>
-                <span className="material-symbols-outlined text-primary text-4xl mb-6 block">domain</span>
-                <h3 className="text-2xl text-white font-bold mb-4">Commercial Venue</h3>
-                <p className="text-slate-400 text-sm leading-relaxed mb-6">Elevating corporate spaces through architectural films, storefront graphics, and large-format event branding.</p>
-              </div>
-              <div className="border-t border-slate-700 pt-6">
-                <p className="text-xs font-bold tracking-widest text-primary mb-4 uppercase">Key Services</p>
-                <div className="flex flex-wrap gap-2">
-                  <span className="px-3 py-1 bg-slate-800 text-[10px] border border-slate-700">Glass Frosting</span>
-                  <span className="px-3 py-1 bg-slate-800 text-[10px] border border-slate-700">Wall Murals</span>
-                  <span className="px-3 py-1 bg-slate-800 text-[10px] border border-slate-700">Wayfinding</span>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Residential Auto */}
-            <motion.div variants={fadeUp} className="md:col-span-4 group relative overflow-hidden bg-white shadow-sm border border-slate-100">
-              <div className="h-64 overflow-hidden">
-                <img
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVMK_YD8wy36jelbNa08YNGdY31bX8N_xhJrCdWAicFy5Ak4GaFJZb7L6ej-DNHpUuBV235UeIWn1OXQ7l2dMKZyfYCZ6rTj4RPkU71xr20TanvvvAzUO9KjtpZDiP8hgZZPncKmEZQSSYmGURtQKtGRoAkcyHQVtFOr89W9AtsgBZO0ooYbkdaXEFdnNJllzyOKS_mOHlgAiDTHRX_dBigmaw912GSkbbKLY143wCqinHjESk9uGqUbnWD95TnIBp70-PMHg2pPAn"
-                  alt="Residential Auto"
-                />
-              </div>
-              <div className="p-8">
-                <h3 className="text-xl font-bold text-slate-900 mb-2">Residential Auto</h3>
-                <p className="text-slate-600 text-sm mb-4">High-end vehicle wraps, bespoke color changes, and premium paint protection films (PPF).</p>
-                <Link to="/residential" className="text-primary font-bold text-xs uppercase tracking-widest inline-flex items-center gap-2 group-hover:gap-4 transition-all">
-                  Explore <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                </Link>
-              </div>
-            </motion.div>
-
-            {/* Residential Home */}
-            <motion.div variants={fadeUp} className="md:col-span-8 group relative overflow-hidden bg-white shadow-sm border border-slate-100 flex flex-col md:flex-row">
-              <div className="md:w-1/2 p-10 flex flex-col justify-center">
-                <h3 className="text-2xl font-bold text-slate-900 mb-4">Residential Home</h3>
-                <p className="text-slate-600 mb-6">Modernizing interiors with premium architectural vinyl. Sustainable solutions for cabinet resurfacing and interior surfaces.</p>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-slate-50 p-4">
-                    <p className="text-xs font-bold text-slate-900 uppercase mb-1 tracking-tight">Eco-Friendly</p>
-                    <p className="text-xs text-slate-500">Minimal waste renovation</p>
+                {/* Content */}
+                <div className="flex flex-col gap-4 p-10">
+                  <div className="flex items-center gap-2 text-slate-400">
+                    {icon}
+                    <span className="text-xs font-bold uppercase tracking-[0.2em]">{label}</span>
                   </div>
-                  <div className="bg-slate-50 p-4">
-                    <p className="text-xs font-bold text-slate-900 uppercase mb-1 tracking-tight">Durability</p>
-                    <p className="text-xs text-slate-500">Scratch &amp; water resistant</p>
+                  <h3
+                    className="text-navy-deep font-bold leading-tight"
+                    style={{ fontFamily: "'Montserrat', sans-serif", fontSize: '30px', lineHeight: '36px' }}
+                  >
+                    {heading}
+                  </h3>
+                  <p className="text-slate-500 text-sm leading-relaxed">{body}</p>
+
+                  {/* Tag Groups */}
+                  <div className="flex flex-wrap gap-6 pt-2">
+                    {groups.map(({ title, items }) => (
+                      <div key={title} className="flex flex-col gap-2">
+                        <span className="text-xs font-bold uppercase tracking-[0.18em] text-primary">{title}</span>
+                        {items.map((item) => (
+                          <div key={item} className="flex items-center gap-2">
+                            <div className="w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
+                            <span className="text-sm text-slate-600">{item}</span>
+                          </div>
+                        ))}
+                      </div>
+                    ))}
                   </div>
                 </div>
-              </div>
-              <div className="md:w-1/2 overflow-hidden">
-                <img
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9RuqfTz-Cd0tS5Pwzt0lDj8T-5ZhwX5fZ5oo_E6kcJ9sfe9Z-Z6SrXhnINobAsLajzn2tpT1QgAne6x2rg8tzcZqGAaatovbJI4b8GV05JwmqoO2fHdjoWDD8IHXSQT5AN9ylp8sOF6FTVAdPWXfs-RNMIyqmr5hIBF1Ji9NkW8ThxlnywlLNTB1G03kLAOZQoLUstneNy42MwdiY7yFUNk7AXLlo6UO4swfYi8FT5du3Ki92t1qPXcMPTWQk9FW4bu33rhcnjvRt"
-                  alt="Residential Home"
-                />
-              </div>
-            </motion.div>
+              </motion.div>
+            ))}
           </motion.div>
+
         </div>
       </section>
 
-      {/* Technical Excellence Section */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
+      {/* ── Technical Excellence ── */}
+      <section className="w-full bg-white py-[120px]">
+        <div className="max-w-[1440px] mx-auto px-10 flex flex-col gap-16">
+
+          {/* Header */}
           <motion.div
-            className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8"
-            initial={{ opacity: 0, y: 24 }}
+            className="flex flex-col gap-4 max-w-xl"
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="max-w-xl">
-              <span className="text-primary font-bold tracking-widest uppercase text-sm mb-4 block">Unmatched Quality</span>
-              <h2 className="text-4xl font-bold text-slate-900">Technical Excellence at Scale</h2>
-            </div>
-            <div className="flex gap-6">
-              <div className="grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all h-12">
-                <img alt="3M" className="h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBn61Wx4eazWQ-7KFevckIWF_hjtpjzKs3AWD8AN4YCwek3kBC5okMPkBdDPuVp7cqKMoeebn-JBj_tKMhg-AXouM5roJNr01i2MrVbrDW1WS6bvKqBYMpBF01PoJuSfRaoo_lXWHztBVltCbHT0F-OnyCicB55bY8wS1YEkWLbpq21Lhqbo3xw-nvhgcMHh-Vbz15SebtXGlCK1ik4rOYGUi9w3ehPNmm-s-FutPIaOl3-chxvw-yFEN2sTJUKWMEJ3RsEHBhCwFSz" />
-              </div>
-              <div className="grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all h-12">
-                <img alt="Avery Dennison" className="h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdpLbujkgzc1iQNN_RmRdLAsCMED_Zj89ufCZDQoexvrFgnWKIahApBal8Rmcifz_duTGpGnH4hfiSXLvEeooCiwkzmXMcFm73WyyY6U9zWrLuL_5xqYlezzHlN8iayD0iE7Vh-8W7noKcgUfr1Nvktlw9pUdR7jo18KDAOCXiwrn7UQvRISsZpXgqLV2TQBOO0C7kHJ5UjQW5_6b7QnU8IV_nFm5n5tC59Jz0uzdAhz0nfPJwu3kRCoDFsLQZYfEld9lRhHiDZzn1" />
-              </div>
-            </div>
+            <span className="text-primary text-xs font-bold uppercase tracking-[0.25em]">Unmatched Quality</span>
+            <h2 className="text-navy-deep text-3xl lg:text-4xl font-bold uppercase tracking-wide whitespace-nowrap">
+              Technical Excellence at Scale
+            </h2>
           </motion.div>
 
+          {/* Pillars */}
           <motion.div
             className="grid grid-cols-1 md:grid-cols-3 gap-12"
             variants={stagger}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, margin: '-60px' }}
+            viewport={{ once: true, margin: '-40px' }}
           >
-            {[
-              { icon: 'groups', title: 'Elite Workforce', desc: '25 full-time expert technicians, each undergoing rigorous bi-annual skill assessments to maintain JCGI standards.' },
-              { icon: 'engineering', title: 'Precision Deployment', desc: 'Our proprietary precision-engineered deployment system ensures consistent quality across large fleet distributions.' },
-              { icon: 'workspace_premium', title: 'Certified Mastery', desc: 'Proudly 3M Certified and Avery Dennison Preferred, backing our work with the industry\'s strongest material warranties.' },
-            ].map(({ icon, title, desc }) => (
-              <motion.div key={title} variants={fadeUp} className="space-y-4">
-                <div className="w-12 h-12 bg-blue-50 flex items-center justify-center text-primary">
-                  <span className="material-symbols-outlined">{icon}</span>
+            {pillars.map(({ icon, title, body }) => (
+              <motion.div key={title} variants={fadeUp} className="flex flex-col gap-4 bg-[#F8FAFC] border border-slate-200 p-8">
+                <div className="w-12 h-12 flex items-center justify-center text-primary" style={{ background: 'rgba(36,99,235,0.1)' }}>
+                  {icon}
                 </div>
-                <h4 className="text-xl font-bold text-slate-900">{title}</h4>
-                <p className="text-slate-600">{desc}</p>
+                <h4 className="text-navy-deep text-lg font-bold">{title}</h4>
+                <p className="text-slate-500 text-sm leading-relaxed">{body}</p>
               </motion.div>
             ))}
           </motion.div>
+
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="py-24 bg-slate-900 text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 pointer-events-none">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-primary blur-[120px]" />
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary blur-[120px]" />
-        </div>
+      {/* ── Final CTA ── */}
+      <section className="w-full bg-white py-[80px] px-10 border-t border-slate-100">
         <motion.div
-          className="relative z-10 max-w-4xl mx-auto px-6 text-center"
-          initial={{ opacity: 0, y: 32 }}
+          className="max-w-3xl mx-auto text-center flex flex-col items-center gap-6"
+          initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
-          <h2 className="font-heading text-3xl md:text-5xl mb-8 leading-tight font-bold uppercase">Ready to Elevate Your Professional Brand Presence?</h2>
-          <p className="text-slate-400 text-lg mb-10 max-w-2xl mx-auto">Discuss your project scope with our technical leads and receive a comprehensive deployment strategy.</p>
+          <h2
+            className="text-navy-deep font-bold uppercase tracking-tight"
+            style={{ fontSize: 'clamp(24px, 3vw, 42px)' }}
+          >
+            Ready to Scale Your Next Project?
+          </h2>
+          <p className="text-slate-500 text-base leading-relaxed">
+            Connect with our team to discuss timelines, material specifications, and logistics
+            for your upcoming installation needs.
+          </p>
           <Link
             to="/contact"
-            className="inline-flex items-center justify-center bg-primary text-white text-sm font-bold px-10 py-5 uppercase tracking-widest hover:bg-blue-700 transition-all duration-300"
+            className="mt-4 inline-flex items-center justify-center h-14 px-10 bg-navy-deep text-white text-xs font-bold tracking-[0.15em] uppercase hover:bg-primary transition-colors duration-200"
           >
-            Request a Technical Consultation
+            Request a Quote
           </Link>
         </motion.div>
       </section>
+
     </main>
   );
 }

@@ -13,198 +13,273 @@ const stagger = {
 };
 
 const stats = [
-  { value: '10+', label: 'Years Legacy', accent: false },
-  { value: '25', label: 'Master Experts', accent: false },
-  { value: '150+', label: 'Commercial Fleets', accent: false },
-  { value: '250+', label: 'Residential Projects', accent: true },
+  { value: '30+', label: 'YEARS LEGACY' },
+  { value: '7',   label: 'EXPERTS' },
+  { value: '1000+', label: 'COMMERCIAL PROJECTS' },
 ];
 
 const crew = [
-  { name: 'Marcus Vance', role: 'Lead Installer', exp: '8 Years Experience', offset: false, src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAxTaxARX9oKM7_husOjsQ1a17sNd-Cr5KfmmkBif-EbKt8GzBfL5Jq4Hzm1pUzJZ7O3ii97nVwwcfXT2XbkcqxpO-8YGhfyH4iXfMBEVwX8v5socxRGCS7v3qwvs578aqwsrUbigwlFnLr770KKGzRUwoJQhbQvbxXQ_dvpvQz2TXtLjuQ-q1xvzphoNP5SGJUZRq0kD9v73YoA06H1-L_ZRfSJAQHU41OSHq-psALz_Oea5dGpJjIoWDkbSaqwAtSBg2eInfNdpI9' },
-  { name: 'Julian Cross', role: 'Founder & CEO', exp: '12 Years Experience', offset: true, src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDQsxqqcdftkuXrBUivqCoWZ7LN_bglijxZn5bXK5047VNIYqt2FzSy_gBGGt0mUJFwQUdfUwTJHMKXIsopuwHlii0ekgxC2-mPyYJM2n06shq3xptjpRe5yR1cCA0R1iqyH0khWjR12AV7uk6ixB0uS0x_tofBmmkbCAsaQwh2OHNYNnWJ4WFGv8BBKiG-ACjqTZLIYnqKDLghyRyC7h62RNdr7RMjpxlvf74QhneWhS7PcsXHubo2g-xeXpw5XdDXr_oUCtb1f_-E' },
-  { name: 'Sarah Jenkins', role: 'Fleet Operations', exp: '6 Years Experience', offset: false, src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCqmlWg_H0VkMo8TkshajuPJW1x9n2HoG-QeOauvDNaBwSqlIE6HTFJzri11xaZM6uOL75Bhb8qX5tCyAbpszto4kGeTzuDIP7zCGdV_Pyf8gzI33TP4JKGhMjU4Xqh5QlH12awJq617G02N7gQfqPlCwq8TTMguhikX7i08Qub5Xr1jQ7B3hnRdN8EM1VTJ4CcbYx7bkhCvITIeYi9uPbqa0K4qszWuwEvR8GcWVIjzWh03CKjnhElGROahCc_6VfLsXtDZuC7QXGS' },
+  {
+    name: 'Luis',
+    role: 'Designer & Installer',
+    exp: '20 Years Experience',
+    src: '/team-luis.png',
+    offset: false,
+  },
+  {
+    name: 'James VI',
+    role: 'Founder & CEO',
+    exp: '33 Years Experience',
+    src: '/team-james-vi.png',
+    offset: true,
+  },
+  {
+    name: 'James VII',
+    role: 'Next Generation Owner & Installer',
+    exp: '3 Years Experience',
+    src: '/team-james-vii.png',
+    offset: false,
+  },
 ];
 
 export default function About() {
   return (
     <div className="w-full">
 
-      {/* Hero Section */}
-      <section className="relative w-full min-h-[720px] flex items-center py-20 px-10 bg-white border-b border-slate-200 bg-grid">
-        <div className="max-w-7xl mx-auto w-full relative z-10 flex flex-col md:flex-row justify-between items-center gap-16">
+      {/* ── Hero ── */}
+      <section className="relative w-full bg-white border-b border-slate-200 overflow-hidden">
+        <div className="max-w-[1440px] mx-auto px-10 py-28 flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+
+          {/* Left: Copy */}
           <motion.div
-            className="flex flex-col gap-8 max-w-3xl"
+            className="flex flex-col gap-8 flex-1 max-w-[600px]"
             variants={stagger}
             initial="hidden"
             animate="show"
           >
-            <motion.div variants={fadeUp} className="flex items-center gap-3">
-              <div className="w-10 h-[2px] bg-primary" />
-              <span className="text-slate-500 text-xs font-bold tracking-[0.3em] uppercase">Enterprise Standard</span>
+            {/* Eyebrow */}
+            <motion.div variants={fadeUp} className="flex items-center gap-4">
+              <div className="w-10 h-[2px] bg-primary flex-shrink-0" />
+              <span className="text-slate-500 text-xs font-bold tracking-[0.25em] uppercase">
+                Enterprise Standard
+              </span>
             </motion.div>
 
+            {/* Heading */}
             <motion.h1
               variants={fadeUp}
-              className="font-heading text-slate-900 text-6xl md:text-[84px] font-bold leading-[0.9] tracking-tight uppercase"
+              className="text-navy-deep font-bold leading-[0.9] tracking-[-0.02em] uppercase"
+              style={{ fontSize: 'clamp(44px, 5.5vw, 80px)' }}
             >
-              A Decade of<br /><span className="text-primary">Precision.</span>
+              3 Decades of<br />
+              <span className="text-primary">Precision.</span>
             </motion.h1>
 
-            <motion.p variants={fadeUp} className="text-slate-600 text-xl font-medium max-w-xl leading-relaxed">
-              Leading Louisville's vinyl graphics industry with flawless execution, obsessive attention to detail, and unmatched scale since 2014.
+            {/* Quote / Body */}
+            <motion.p variants={fadeUp} className="text-slate-600 text-base leading-relaxed max-w-[520px]">
+              Jim Campbell. A man who devoted his life to his family, friends and the adventure of
+              the next experience. He believed "You should never be proud of doing what's right.
+              You should just do what's right." <span className="text-slate-400 italic">— Dean Smith</span>
             </motion.p>
 
+            {/* CTA */}
             <motion.div variants={fadeUp}>
               <Link
                 to="/contact"
-                className="inline-flex min-w-[180px] cursor-pointer items-center justify-center h-14 px-8 bg-slate-900 text-white text-sm font-bold tracking-widest hover:bg-primary transition-all uppercase"
+                className="inline-flex items-center justify-center h-14 px-8 bg-navy-deep text-white text-xs font-bold tracking-[0.15em] uppercase hover:bg-primary transition-colors duration-200"
               >
                 Start Your Project
               </Link>
             </motion.div>
           </motion.div>
 
+          {/* Right: Image */}
           <motion.div
-            className="flex-1 max-w-xl aspect-square relative overflow-hidden border border-slate-200 shadow-2xl"
-            initial={{ opacity: 0, scale: 1.06 }}
+            className="relative flex-1 max-w-[560px] w-full"
+            initial={{ opacity: 0, scale: 1.04 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.25 }}
           >
-            <img
-              alt="High contrast wide shot of a massive commercial garage"
-              className="w-full h-full object-cover grayscale contrast-125"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7zAs7LjLNZQaZKK1l2yMpMqAkFjDGgkglpRNRB-RnRIYKbSxPkHwsADNjqLWTU-mHGzt3n7sRhQui35ZF9QBq1YWwZqrm_FAvkhkO-lgGTA0CS-cWOlFrNHQ35lSiZ7NWK9swcY-W7ghT0jguAau4QiVg4pcLZ72sQR8TmAX_4hXwHJzKvBbNnGCcRlm-e5IkzdB97RnEy5475hfKuNMzlnial_Cu1zl3kB1xUm3ylV3DfeywaHmf-vRR6Uye7WoMUeAC9d9i4hri"
-            />
-            <div className="absolute inset-0 bg-slate-900/10 mix-blend-multiply" />
+            <div className="relative overflow-hidden border border-slate-200 shadow-xl aspect-[4/5]">
+              <img
+                src="/jim-campbell.png"
+                alt="Jim Campbell, founder of JCGI"
+                className="w-full h-full object-cover"
+              />
+            </div>
           </motion.div>
+
         </div>
       </section>
 
-      {/* Stats Ribbon */}
-      <section className="w-full bg-slate-900 py-20 px-10">
-        <motion.div
-          className="max-w-7xl mx-auto flex flex-wrap lg:flex-nowrap justify-between gap-8"
-          variants={stagger}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
-        >
-          {stats.map(({ value, label, accent }, i) => (
-            <motion.div key={label} variants={fadeUp} className={`flex flex-col gap-2 w-1/2 lg:w-1/4 border-l border-slate-700 pl-6 ${i === 0 ? 'border-0 md:border-l' : ''}`}>
-              <span className={`text-5xl md:text-6xl font-bold tracking-tight ${accent ? 'text-primary' : 'text-white'}`}>{value}</span>
-              <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">{label}</span>
-            </motion.div>
-          ))}
-        </motion.div>
+      {/* ── Stats Banner ── */}
+      <section className="w-full bg-navy-deep py-16 px-10">
+        <div className="max-w-[1440px] mx-auto">
+          <div className="flex flex-col sm:flex-row items-stretch w-full">
+            {stats.map(({ value, label }, i) => (
+              <div
+                key={label}
+                className={`flex flex-col items-center justify-center gap-2 py-8 sm:py-0 flex-1 text-center ${
+                  i > 0 ? 'sm:border-l border-slate-700 border-t sm:border-t-0' : ''
+                }`}
+              >
+                <p className="text-white text-4xl lg:text-5xl font-bold tracking-tight">{value}</p>
+                <p className="text-slate-400 text-xs font-semibold uppercase tracking-[0.18em]">{label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
-      {/* The Crew Section */}
-      <section className="w-full py-32 px-10 bg-white">
-        <div className="max-w-7xl mx-auto flex flex-col gap-16">
+      {/* ── The Crew ── */}
+      <section className="w-full bg-white py-[120px] px-10">
+        <div className="max-w-[1440px] mx-auto flex flex-col gap-16">
+
+          {/* Header */}
           <motion.div
-            className="text-center"
-            initial={{ opacity: 0, y: 24 }}
+            className="flex flex-col items-center gap-4 text-center"
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="font-heading text-slate-900 text-4xl md:text-5xl font-bold uppercase tracking-tight mb-4">The Architects of Vinyl</h2>
-            <p className="text-slate-500 text-lg max-w-2xl mx-auto">A collective of obsessive installers, designers, and project managers dedicated to absolute perfection.</p>
+            <h2 className="text-navy-deep text-3xl lg:text-4xl font-bold uppercase tracking-tight">
+              The Architects of Vinyl
+            </h2>
+            <p className="text-slate-500 text-base max-w-xl leading-relaxed">
+              A collective of obsessive installers, designers, and project managers dedicated to
+              absolute perfection.
+            </p>
           </motion.div>
 
+          {/* Cards */}
           <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
+            className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-slate-200 max-w-[1024px] mx-auto w-full"
             variants={stagger}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, margin: '-60px' }}
+            viewport={{ once: true, margin: '-40px' }}
           >
-            {crew.map(({ name, role, exp, offset, src }) => (
+            {crew.map(({ name, role, exp, src, offset }, idx) => (
               <motion.div
-                key={name}
+                key={`${name}-${role}`}
                 variants={fadeUp}
-                className={`bg-white border text-center transition-all hover:border-primary hover:shadow flex flex-col group overflow-hidden ${offset ? 'shadow-xl lg:-translate-y-4' : ''}`}
+                className={`flex flex-col bg-[#F1F5F9] ${idx > 0 ? 'md:border-l border-slate-200 border-t md:border-t-0' : ''}`}
               >
-                <div className="w-full aspect-[3/4] overflow-hidden relative bg-slate-100">
-                  <img alt={`${name} portrait`} className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500" src={src} />
+                <div className="overflow-hidden" style={{ height: '320px' }}>
+                  <img
+                    src={src}
+                    alt={`${name} — ${role}`}
+                    className="w-full h-full object-cover object-top"
+                  />
                 </div>
-                <div className="p-8 text-left">
-                  <h3 className="text-xl font-bold text-slate-900 mb-1">{name}</h3>
-                  <p className="text-primary text-xs font-bold uppercase tracking-widest mb-4">{role}</p>
-                  <p className="text-slate-500 text-sm font-medium">{exp}</p>
+                <div className="flex flex-col gap-1 p-8">
+                  <h3
+                    className="text-navy-deep text-xl font-bold"
+                    style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                  >
+                    {name}
+                  </h3>
+                  <p className="text-primary text-xs font-bold uppercase tracking-[0.14em]">{role}</p>
+                  <p className="text-slate-400 text-xs font-semibold uppercase tracking-[0.14em] mt-1">{exp}</p>
                 </div>
               </motion.div>
             ))}
           </motion.div>
+
         </div>
       </section>
 
-      {/* Louisville Roots */}
-      <section className="w-full bg-slate-50 border-y border-slate-200">
-        <div className="flex flex-col lg:flex-row w-full min-h-[600px]">
+      {/* ── Louisville Roots ── */}
+      <section className="w-full bg-[#F1F5F9] border-y border-slate-200">
+        <div className="flex flex-col lg:flex-row w-full max-w-[1440px] mx-auto min-h-[560px]">
+
+          {/* Left: Text */}
           <motion.div
-            className="w-full lg:w-1/2 p-10 md:p-20 flex flex-col justify-center gap-8"
-            initial={{ opacity: 0, x: -32 }}
+            className="w-full lg:w-1/2 px-10 lg:px-20 py-20 flex flex-col justify-center gap-8"
+            initial={{ opacity: 0, x: -28 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="flex items-center gap-3">
-              <span className="material-symbols-outlined text-primary text-2xl">location_on</span>
-              <span className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500">Louisville Headquarters</span>
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-[2px] bg-primary flex-shrink-0" />
+              <span className="text-slate-500 text-xs font-bold tracking-[0.25em] uppercase">Louisville Headquarters</span>
             </div>
-            <h2 className="font-heading text-slate-900 text-4xl md:text-5xl font-bold uppercase tracking-tight">Deep Roots in<br />Louisville.</h2>
-            <div className="flex flex-col gap-6 text-slate-600 text-lg leading-relaxed font-medium">
-              <p>Born in the heart of Kentucky, JCGI started in a single-bay garage with one goal: elevate the standard of vehicle aesthetics. Today, we operate out of a state-of-the-art 15,000 sq ft climate-controlled facility designed specifically for flawless vinyl application.</p>
-              <p>We are proud to serve the local community, from small business storefronts to massive commercial fleets that keep the Midwest moving.</p>
+            <h2
+              className="text-navy-deep font-bold uppercase leading-tight tracking-tight"
+              style={{ fontSize: 'clamp(32px, 3.5vw, 52px)' }}
+            >
+              Deep Roots in<br />Louisville.
+            </h2>
+            <div className="flex flex-col gap-5 text-slate-600 text-base leading-relaxed">
+              <p>
+                JCGI, Inc was established in 1993 for the purpose of graphic installations. At JCGI
+                we developed the understanding that "Our Work Is Your Image". With that in mind we
+                have dedicated our business to giving you, not only, the best quality, but the best
+                experience you can have with changing, upgrading or simply bringing your vision to
+                life for your brand.
+              </p>
+              <p>
+                With over 30 years of experience and our knowledge of the industry, we can
+                definitely handle the branding needs your business deserves.
+              </p>
             </div>
-            <button className="w-fit flex cursor-pointer items-center justify-center h-12 px-8 border-2 border-slate-900 text-slate-900 hover:bg-slate-900 hover:text-white transition-all text-xs font-bold tracking-widest uppercase">
-              View Facility
-            </button>
+            <div>
+              <p className="text-slate-500 text-xs font-semibold uppercase tracking-[0.18em]">
+                13005 Middletown Industrial Blvd B · Louisville, KY 40223
+              </p>
+            </div>
           </motion.div>
 
+          {/* Right: Image */}
           <motion.div
-            className="w-full lg:w-1/2 relative overflow-hidden bg-slate-200"
-            initial={{ opacity: 0, scale: 1.05 }}
+            className="w-full lg:w-1/2 relative overflow-hidden bg-slate-200 min-h-[400px] lg:min-h-0"
+            initial={{ opacity: 0, scale: 1.04 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           >
             <img
-              alt="JCGI Shop Interior"
-              className="w-full h-full object-cover grayscale transition-all duration-700 hover:grayscale-0"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeI6NN9hw3mmKcpruj3iPDRPXgkNYd4nmXB4GSlhsaXJTkkq4Mj8UNto3JaaWNcjKNW43DGPwJsOKahnhxU0EoUgYKRaLK1gz1Pp0s_CoGBJarP20CoNvgIwdKHoT8Y-5hcEH80W5MQA_UvU5Q6lXgCfc2wdwESkNx7jb1hB6u4FEs4aG0Txpp63i8osWLNOtewnxFEiOUgiMWDr7HywcaIpNAmdPAJosfwVOctVr3EzZGRWZ4QkDMkLo1fD6xQN9BZEa7-suKQiDY"
+              src="/studio-shop.png"
+              alt="JCGI studio and shop interior"
+              className="absolute inset-0 w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
             />
           </motion.div>
+
         </div>
       </section>
 
-      {/* Footer CTA */}
-      <section className="w-full py-32 px-10 bg-white text-center flex flex-col items-center justify-center gap-12">
-        <motion.h2
-          className="font-heading text-4xl md:text-6xl font-bold text-slate-900 uppercase tracking-tight max-w-4xl mx-auto leading-tight"
-          initial={{ opacity: 0, y: 32 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-        >
-          Ready for <span className="text-primary">Flawless</span> Execution?
-        </motion.h2>
+      {/* ── Footer CTA ── */}
+      <section className="w-full bg-white py-[120px] px-10">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          className="max-w-3xl mx-auto text-center flex flex-col items-center gap-6"
+          initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.15 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
+          <h2
+            className="text-navy-deep font-bold uppercase tracking-tight leading-tight"
+            style={{ fontSize: 'clamp(28px, 3.5vw, 48px)' }}
+          >
+            READY FOR{' '}
+            <span className="text-primary">FLAWLESS</span>{' '}
+            EXECUTION?
+          </h2>
+          <p className="text-slate-500 text-base leading-relaxed max-w-xl">
+            Connect with our team to discuss timelines, material specifications, and logistics
+            for your upcoming installation needs.
+          </p>
           <Link
             to="/contact"
-            className="inline-flex cursor-pointer items-center justify-center h-16 px-12 bg-slate-900 text-white text-sm font-bold uppercase tracking-[0.2em] hover:bg-primary transition-all duration-300 shadow-xl gap-3"
+            className="mt-4 inline-flex items-center justify-center h-14 px-10 bg-navy-deep text-white text-xs font-bold tracking-[0.15em] uppercase hover:bg-primary transition-colors duration-200"
           >
             Start Your Project
-            <span className="material-symbols-outlined ml-1" style={{ fontVariationSettings: "'FILL' 0" }}>arrow_forward</span>
           </Link>
         </motion.div>
       </section>
+
     </div>
   );
 }

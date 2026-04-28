@@ -3,188 +3,203 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 32 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
+  hidden: { opacity: 0, y: 28 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
 };
 
-const staggerContainer = {
+const stagger = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.12 } },
-};
-
-const statItem = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+  show: { transition: { staggerChildren: 0.1 } },
 };
 
 const stats = [
-  { value: '10+', label: 'Years Legacy' },
-  { value: '25', label: 'Experts' },
-  { value: '150+', label: 'Commercial Projects' },
-  { value: '250+', label: 'Residential Projects' },
+  { value: '30+', label: 'YEARS LEGACY' },
+  { value: '7',   label: 'EXPERTS' },
+  { value: '1000+', label: 'COMMERCIAL PROJECTS' },
 ];
-
-const clients = ['GENSLER', 'PALANTIR', 'Louisville Co.', 'NORTON', 'Brown-Forman'];
 
 export default function Home() {
   return (
     <main className="w-full flex flex-col">
 
-      {/* Split Hero Section */}
-      <section className="relative w-full flex flex-col lg:flex-row min-h-[720px] lg:max-h-[800px] bg-white border-b border-slate-200">
+      {/* ── Full Bleed Hero ── */}
+      <section className="relative w-full flex items-center min-h-screen overflow-hidden">
 
-        {/* Left: Typographic Lockup */}
-        <div className="w-full lg:w-1/2 flex flex-col justify-center p-8 lg:p-20 bg-grid relative overflow-hidden">
+        {/* Background image */}
+        <img
+          src="/jcgi-storefront.png"
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+        />
+
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-[#181616]/[0.63]" />
+
+        {/* Content */}
+        <div className="relative z-10 w-full max-w-[1440px] mx-auto px-10 py-28">
           <motion.div
-            className="max-w-[640px] relative z-10"
-            variants={staggerContainer}
+            className="flex flex-col max-w-[800px]"
+            style={{ gap: '31px' }}
+            variants={stagger}
             initial="hidden"
             animate="show"
           >
-            <motion.div variants={fadeUp} className="mb-8 flex items-center gap-3">
-              <div className="w-10 h-[2px] bg-primary" />
-              <span className="text-slate-500 text-xs font-bold tracking-[0.3em] uppercase">Enterprise Grade // Louisville</span>
+            {/* Eyebrow */}
+            <motion.div variants={fadeUp} className="flex items-center gap-4">
+              <div className="w-10 h-[2px] bg-primary flex-shrink-0" />
+              <span className="text-white/80 text-xs font-medium tracking-[0.2em] uppercase">
+                our work is your image// LOUISVILLE
+              </span>
             </motion.div>
 
+            {/* Headline */}
             <motion.h1
               variants={fadeUp}
-              className="font-heading text-5xl lg:text-[84px] font-bold text-navy-deep leading-[0.9] tracking-[-0.03em] uppercase mb-10"
+              className="text-white font-bold leading-[0.9] tracking-[-0.02em]"
+              style={{ fontSize: 'clamp(52px, 6vw, 84px)' }}
             >
-              ENGINEERED<br />PRECISION.<br />
-              <span className="text-white" style={{ WebkitTextStroke: '1.5px #0F172A' }}>VINYL</span><br />
-              DEPLOYMENT.
+              ENGINEERED<br />
+              Designs.<br />
+              Graphic<br />
+              Installations.
             </motion.h1>
 
-            <motion.p variants={fadeUp} className="text-slate-600 text-lg font-medium leading-relaxed max-w-[500px] mb-12">
-              A decade of precision vinyl graphics installation. Scale, logistics, and flawless execution for commercial fleet operations and premium residential styling.
+            {/* Subtext */}
+            <motion.p
+              variants={fadeUp}
+              className="text-[#E2E8F0] text-base leading-relaxed max-w-[600px]"
+            >
+              3 decades of precision vinyl graphics installation. Scale, logistics, and flawless
+              execution for commercial fleet operations and premium architectural styling.
             </motion.p>
 
-            <motion.div variants={fadeUp} className="flex flex-wrap gap-4">
+            {/* Buttons */}
+            <motion.div variants={fadeUp} className="flex flex-wrap gap-4 pt-2">
               <Link
                 to="/services"
-                className="flex min-w-[180px] cursor-pointer items-center justify-center rounded-sm h-14 px-8 bg-navy-deep text-white text-sm font-bold tracking-[0.1em] hover:bg-primary transition-all duration-300 uppercase"
+                className="flex items-center justify-center h-14 px-8 bg-primary text-white text-xs font-bold tracking-[0.12em] uppercase hover:bg-blue-700 transition-colors duration-200"
               >
-                View Capabilities
+                VIEW CAPABILITIES
               </Link>
               <Link
                 to="/portfolio"
-                className="flex min-w-[180px] cursor-pointer items-center justify-center rounded-sm h-14 px-8 bg-white border-2 border-navy-deep text-navy-deep text-sm font-bold tracking-[0.1em] hover:bg-navy-deep hover:text-white transition-all duration-300 uppercase"
+                className="flex items-center justify-center h-14 px-8 bg-white/10 border border-white/30 text-white text-xs font-bold tracking-[0.12em] uppercase hover:bg-white/20 transition-colors duration-200"
               >
-                Our Gallery
+                OUR GALLERY
               </Link>
             </motion.div>
           </motion.div>
         </div>
-
-        {/* Right: High Resolution Image */}
-        <motion.div
-          className="w-full lg:w-1/2 relative min-h-[400px] lg:min-h-[720px] overflow-hidden group"
-          initial={{ opacity: 0, scale: 1.05 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-        >
-          <img
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCL94VWttY_faI3z4YbEsg2wpNroNOFESrtBQwZTF4CsxJEp_9nYXMRfIwh63jTAdw9UDAi67FbluE1sE8VkB3_8aqQpaEHfkKZpcV8PMNcmx3zJHPyYVShHNx45a37hiGNzvRATM4uh9KY7NOSuBh8zlPKACkigl0P9YCLpLSU21_q8_FkGVkYCJgr4x7L_uMc4L1qW_mc7zwFlr2L79cq4qFR7cVT600N4aGuTOJ_HILoAMVdNJiHeWWVkVxzs7moOOIscsdiHpF7"
-            alt="Precision vinyl installation in progress"
-            className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-1000 group-hover:scale-110 grayscale contrast-125"
-          />
-          <div className="absolute inset-0 bg-navy-deep/10 mix-blend-multiply" />
-          <motion.div
-            className="absolute bottom-8 right-8 border border-white/30 bg-white/10 backdrop-blur-md px-4 py-2 flex items-center gap-3"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.8, duration: 0.5 }}
-          >
-            <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            <span className="text-white text-[10px] font-bold tracking-[0.2em] uppercase">Project Status: In Progress</span>
-          </motion.div>
-        </motion.div>
       </section>
 
-      {/* Stats Banner */}
-      <section className="w-full bg-navy-deep py-16">
-        <div className="max-w-[1440px] mx-auto px-10">
-          <motion.div
-            className="grid grid-cols-2 md:grid-cols-4 gap-8 text-white text-center"
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: '-80px' }}
-          >
+      {/* ── Stats Banner ── */}
+      <section className="w-full bg-navy-deep py-16 px-10">
+        <div className="max-w-[1440px] mx-auto">
+          <div className="flex flex-col sm:flex-row items-stretch w-full">
             {stats.map(({ value, label }, i) => (
-              <motion.div key={label} variants={statItem} className={`flex flex-col gap-2 pl-6 ${i > 0 ? 'border-l border-slate-700' : ''}`}>
-                <p className="text-4xl font-bold tracking-tight">{value}</p>
-                <p className="text-sm font-medium text-slate-300 uppercase tracking-widest">{label}</p>
-              </motion.div>
+              <div
+                key={label}
+                className={`flex flex-col items-center justify-center gap-2 py-8 sm:py-0 flex-1 text-center ${
+                  i > 0 ? 'sm:border-l border-slate-700 border-t sm:border-t-0' : ''
+                }`}
+              >
+                <p className="text-white text-4xl lg:text-5xl font-bold tracking-tight">{value}</p>
+                <p className="text-slate-400 text-xs font-semibold uppercase tracking-[0.18em]">{label}</p>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* Services Section */}
-      <section className="w-full py-[120px] bg-white">
-        <div className="max-w-[1440px] mx-auto px-10">
+      {/* ── Our Expertise ── */}
+      <section className="w-full bg-white py-[120px]">
+        <div className="max-w-[1440px] mx-auto px-10 flex flex-col items-center gap-16">
+
+          {/* Section header */}
           <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 24 }}
+            className="flex flex-col items-center gap-4 text-center"
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-navy-deep text-4xl font-bold uppercase tracking-tight mb-4">Our Expertise</h2>
-            <p className="text-slate-500 max-w-2xl mx-auto">Delivering flawless execution across commercial fleet operations and high-end residential custom styling.</p>
+            <h2 className="text-navy-deep text-3xl lg:text-4xl font-bold uppercase tracking-tight">
+              OUR EXPERTISE
+            </h2>
+            <p className="text-slate-500 text-base max-w-xl leading-relaxed">
+              Delivering flawless execution across commercial fleet operations and high-end
+              architectural custom styling.
+            </p>
           </motion.div>
 
+          {/* Cards */}
           <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto"
-            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-2 w-full max-w-[1024px] gap-0 border border-slate-200"
+            variants={stagger}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, margin: '-60px' }}
+            viewport={{ once: true, margin: '-40px' }}
           >
-            {/* Commercial Card */}
+            {/* Automotive */}
             <motion.div variants={fadeUp}>
               <Link
-                to="/commercial"
-                className="group block bg-[#F1F5F9] border border-slate-200 rounded-sm overflow-hidden hover:border-primary transition-all duration-300 shadow-sm hover:shadow-md"
+                to="/portfolio"
+                className="group flex flex-col bg-[#F1F5F9] h-full hover:bg-slate-200 transition-colors duration-300"
               >
-                <div className="h-[280px] w-full overflow-hidden">
+                <div className="h-[280px] overflow-hidden">
                   <img
-                    alt="Commercial fleet wrap"
-                    className="w-full h-full object-cover grayscale-to-color transform group-hover:scale-105 transition-transform duration-500"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCf83ABZwjRjzDMWX60X-aKnmqur4z7nImq1ieVJB7bJbxPv87SG54CItgCIKSeqXYXrHl4dn7JpGcJhO5iSacvICZUHvRtj8J4nTDFFN4qIYxB7NrbKFdOMc0RdJb3eWymSdKVt87xxGYHG3Q5oC3QTWziqhpE8TV0rtMWCfw9wNKgGhHq0WwRLc_QKgE9JNh1gRHjD6KU5V2YV7i83rIZZ8C1N6KnKpxRY6P35XhZ3f-NieDhoESOCwu1hdInFmAPlFdspB65SOk_"
+                    src="/car-show-vw.png"
+                    alt="Automotive wrap project"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
-                <div className="p-8">
-                  <h3 className="text-2xl font-bold text-navy-deep mb-3">Commercial Portfolio</h3>
-                  <p className="text-slate-600 mb-6 font-medium">Scale, logistics, and precision. View case studies of fleet wraps, architectural installations, and retail barricades designed for enterprise impact.</p>
-                  <div className="flex items-center text-primary font-bold text-sm uppercase tracking-wider">
-                    View Case Studies
-                    <span className="material-symbols-outlined ml-2 text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                <div className="flex flex-col gap-3 p-8">
+                  <h3
+                    className="text-navy-deep text-xl font-bold"
+                    style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                  >
+                    Automotive
+                  </h3>
+                  <p className="text-slate-500 text-sm leading-relaxed">
+                    From custom personal styling for enthusiast builds to large-scale commercial
+                    fleet identity reimagining.
+                  </p>
+                  <div className="flex items-center gap-2 pt-3 text-primary text-xs font-bold uppercase tracking-[0.12em]">
+                    VIEW AUTOMOTIVE
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform duration-200"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                   </div>
                 </div>
               </Link>
             </motion.div>
 
-            {/* Residential Card */}
+            {/* Architectural */}
             <motion.div variants={fadeUp}>
               <Link
-                to="/residential"
-                className="group block bg-[#F1F5F9] border border-slate-200 rounded-sm overflow-hidden hover:border-primary transition-all duration-300 shadow-sm hover:shadow-md"
+                to="/portfolio"
+                className="group flex flex-col bg-[#F1F5F9] h-full border-l border-slate-200 hover:bg-slate-200 transition-colors duration-300"
               >
-                <div className="h-[280px] w-full overflow-hidden">
+                <div className="h-[280px] overflow-hidden">
                   <img
-                    alt="Residential vehicle wrap"
-                    className="w-full h-full object-cover grayscale-to-color transform group-hover:scale-105 transition-transform duration-500"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDc9PqTiyCXwR6eOcX_ZyO25aXZqp7-rdbhOTlOaCjHhsGLLULT6gJ4yZA6cOnTvcmSTQnESwweUJDMgyZzOX5BKvIcFWJTXuPbBdPmiZyeDIgoBUVOGIJwKUROfhnIDY8FvHKrLZ9IRyBZik5cpfLWHotVRZCF9DBifaxU9gDHLx3rFINcpGqJ8cpVOxHqkv51xmuUAdxqU_1V53NyPUUi4JFncrEzt9rakqBTq-KFw-m4-6bFw-AQbH4bG-pPogcc3UtHA7UM6bkt"
+                    src="/wildcat-engineering-mural.png"
+                    alt="Architectural installation project"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
-                <div className="p-8">
-                  <h3 className="text-2xl font-bold text-navy-deep mb-3">Residential Projects</h3>
-                  <p className="text-slate-600 mb-6 font-medium">Meticulous detail and premium finish. Explore our gallery of high-end interior applications and custom vehicle styling tailored for individuals.</p>
-                  <div className="flex items-center text-primary font-bold text-sm uppercase tracking-wider">
-                    Explore Gallery
-                    <span className="material-symbols-outlined ml-2 text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                <div className="flex flex-col gap-3 p-8">
+                  <h3
+                    className="text-navy-deep text-xl font-bold"
+                    style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                  >
+                    Architectural
+                  </h3>
+                  <p className="text-slate-500 text-sm leading-relaxed">
+                    Transforming environments through large-format graphics. Expert installation of
+                    interior wall murals, retail barricades, and commercial glass applications.
+                  </p>
+                  <div className="flex items-center gap-2 pt-3 text-primary text-xs font-bold uppercase tracking-[0.12em]">
+                    VIEW ARCHITECTURAL
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform duration-200"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                   </div>
                 </div>
               </Link>
@@ -193,51 +208,47 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Trust Strip */}
-      <section className="w-full py-20 bg-[#F1F5F9] border-y border-slate-200">
-        <div className="max-w-[1440px] mx-auto px-10 text-center">
-          <motion.p
-            className="text-xs font-bold text-slate-500 uppercase tracking-[0.2em] mb-10"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            Trusted by leading facility managers and fleet directors
-          </motion.p>
-          <motion.div
-            className="flex flex-wrap justify-center items-center gap-16 opacity-60 grayscale hover:opacity-100 transition-opacity duration-500"
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 0.6, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-          >
-            {clients.map((c) => (
-              <div key={c} className="text-2xl font-black text-navy-deep tracking-tighter">{c}</div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Final CTA */}
-      <section className="w-full py-[120px] bg-white">
+      {/* ── Trust Strip ── */}
+      <section className="w-full bg-[#F1F5F9] border-y border-slate-200 py-20">
         <motion.div
-          className="max-w-3xl mx-auto px-10 text-center"
-          initial={{ opacity: 0, y: 32 }}
+          className="max-w-[1440px] mx-auto px-10 text-center"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+        >
+          <p className="text-slate-500 text-xs font-bold uppercase tracking-[0.22em] leading-loose max-w-3xl mx-auto">
+            TRUSTED BY LEADING FACILITY MANAGERS AND FLEET DIRECTORS, FROM VARIOUS LOCAL
+            BUSINESSES TO NATIONAL PRINT COMPANIES.
+          </p>
+        </motion.div>
+      </section>
+
+      {/* ── Final CTA ── */}
+      <section className="w-full bg-white py-[120px] px-10">
+        <motion.div
+          className="max-w-3xl mx-auto text-center flex flex-col items-center gap-6"
+          initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
-          <h2 className="text-4xl font-bold text-navy-deep mb-6 uppercase tracking-tight">Ready to scale your next project?</h2>
-          <p className="text-lg text-slate-600 mb-12 font-medium">Connect with our team to discuss timelines, material specifications, and logistics for your upcoming installation needs.</p>
+          <h2 className="text-navy-deep text-3xl lg:text-4xl font-bold uppercase tracking-tight">
+            READY TO SCALE YOUR NEXT PROJECT?
+          </h2>
+          <p className="text-slate-500 text-base leading-relaxed">
+            Connect with our team to discuss timelines, material specifications, and logistics
+            for your upcoming installation needs.
+          </p>
           <Link
             to="/contact"
-            className="inline-flex h-14 items-center justify-center rounded-sm bg-navy-deep px-10 text-sm font-bold text-white uppercase tracking-[0.15em] hover:bg-primary transition-all duration-300 shadow-lg"
+            className="mt-4 flex items-center justify-center h-14 px-10 bg-navy-deep text-white text-xs font-bold tracking-[0.15em] uppercase hover:bg-primary transition-colors duration-200"
           >
-            Request a Quote
+            REQUEST A QUOTE
           </Link>
         </motion.div>
       </section>
+
     </main>
   );
 }
